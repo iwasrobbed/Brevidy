@@ -1,0 +1,99 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+
+  - # Main (White) Content Wrapper
+  .content-wrapper.standard-padding
+  
+    = cache("faq_page") do
+      %ul.unstyled.mtl
+        %li
+          %h4 What’s wrong with video sharing websites today?
+        %li
+          Simply put: they care too much about the video itself and not enough about the people in the video.  
+          %br/
+          %br/
+          Videos inherently connect with us on a deeper, more emotional level.  They have the power to move 
+          you to tears, to inspire you, to make you laugh, and to bring people together.
+          However, up until this point, videos on the Internet have been distributed as a "consumable product" 
+          where you view the video, and then you move on without giving a second thought to the person 
+          behind the video.  Brevidy aims to change the status quo by connecting the people who are sharing
+          the video with the people who are watching it. 
+
+      %ul.unstyled
+        %li
+          %h4 What is Brevidy?
+        %li
+          Brevidy is a video social network.  We want to use videos to connect people.  We want to allow you 
+          to share an intimate moment with your family, a laugh with your friends, or a window into your life 
+          with someone halfway around the world.  We want to put the soul back into video: You!     
+      
+      %ul.unstyled
+        %li
+          %h4 What's with the name?
+        %li
+          The word "brevity" is defined as 
+          %span.tb the quality of being brief in duration.  
+          Brevidy provides you a platform to capture the fleeting moments of your life and share them with 
+          those around you.
+          %br/
+          %span{:style => "font-size: 11px; color: gray"}
+            Psssst... We spelled it wrong on purpose ;)
+   
+      %ul.unstyled
+        %li
+          %h4 Where can I get some general help, leave feedback, or submit an idea?
+        %li
+          Please visit our #{link_to("community page", "http://getsatisfaction.com/brevidy", :target => "_blank")}
+          to ask a question, leave feedback, submit an idea, or view other help topics.  Alternatively, you can click the black "Feedback"
+          tab that is on the left side of this window.
+    
+      %ul.unstyled
+        %li
+          %h4 Where can I find more help specific to videos?
+        %li
+          Please refer to the #{link_to("frequently asked questions for videos", video_faq_path)}.
+        
+      %ul.unstyled
+        %li
+          %h4 Who can see my videos?
+        %li
+          It depends on what kind of channel you put the video in:
+          %ul
+            %li 
+              %strong Featured Channel - 
+              All videos are public (anyone visiting Brevidy can see them)
+            %li 
+              %strong Public Channel - 
+              All videos are public (anyone visiting Brevidy can see them)
+            %li 
+              %strong Private Channel - 
+              All videos are private (only people you approve can see them)
+    
+      %ul.unstyled
+        %li
+          %h4 When are you going to make an iPhone/Android app?
+        %li
+          Creating a mobile app to support Brevidy is currently on our roadmap.  However, our top priority 
+          is ensuring that our web-based interface provides a polished user-experience first. 
+      
+      %ul.unstyled
+        %li
+          %h4 Are you hiring?
+        %li
+          We are 
+          %strong always 
+          looking for talented, driven, and focused Ruby on Rails, jQuery, iPhone, and Android developers 
+          who want startup experience.  If you think you're up for the challenge, shoot us a message at 
+          #{mail_to("jobs@brevidy.com", nil, {:encode => "hex"} )}
+          %br/
+          %br/
+          %i
+            "Wanting something is not enough.  You must hunger for it. Your motivation must be absolutely 
+            compelling in order to overcome the obstacles that will invariably come your way." -- Les Brown
+  
+      %ul.unstyled
+        %li
+          %strong Note to Investors: 
+          We are open to discussions with professional investors or business partners.  If you are interested,
+          please contact us at #{mail_to("investors@brevidy.com", nil, {:encode => "hex"} )} 
+          for more information.

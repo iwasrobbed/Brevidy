@@ -1,0 +1,4 @@
+= link_to(user_video_badges_path(video_owner, video), :class => "unbadge", 
+   "data-badge-type" => "#{icon.id}", "data-video-id" => "#{video.id}", 
+   "data-badge-id" => "#{badge.id}") do
+  %i{:rel => "twipsy", :class => "#{icon.css_class}", :title => "Unbadge", :style => "opacity: 0.3"}

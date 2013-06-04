@@ -1,0 +1,40 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+
+  - # Main (White) Content Wrapper
+  .content-wrapper.standard-padding
+    .info-message.mtl
+      %h3 Error: Please upgrade your web browser
+      
+      %p
+        We're sorry, but you are using an old version of Internet Explorer (6, 7, 8) which is not supported on Brevidy.
+        %br/
+        %br/  
+        To access Brevidy, install a modern web browser such as 
+        #{link_to("Google Chrome", "http://www.google.com/chrome")},
+        #{link_to("Mozilla Firefox", "http://www.mozilla.com/firefox")} or
+        #{link_to("Internet Explorer 9+", "http://ie.microsoft.com")}
+
+        %div{:style => "margin: 20px 0"}
+          %a{:href => "http://www.google.com/chrome", :style => "margin: 0 110px; text-decoration: none"}
+            = image_tag("browsers/google_chrome_logo.png", :size => "100x100")
+          %a{:href => "http://www.mozilla.com/firefox", :style => "margin: 0 10px; text-decoration: none"}
+            = image_tag("browsers/firefox_logo.png", :size => "100x100")
+          %a{:href => "http://ie.microsoft.com", :style => "margin: 0 110px; text-decoration: none"}
+            = image_tag("browsers/ie9_logo.png", :size => "100x100")
+      
+      %p{:style => "border-bottom: 1px dotted gray"}
+        We apologize for any inconvenience this may have caused and appreciate your understanding!
+        %br/
+        %br/
+        Sincerely,
+        %br/
+        The Brevidy Team
+        %br/
+        %br/
+        %p{:style => "color: gray"}
+          Internet Explorer and the logo shown are registered trademarks of Microsoft, Inc.
+          %br/
+          Google Chrome and the logo shown are registered trademarks of Google, Inc.
+          %br/
+          Mozilla Firefox and the logo shown are registered trademarks of Mozilla Corp.

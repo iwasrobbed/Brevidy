@@ -1,0 +1,22 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'shared/content_titles'
+  
+    = render @channels
+    
+    = will_paginate @channels
+    
+    = render :partial => "shared/infinite_scrolling", :locals => { :item_selector => ".channel-wrapper" }
+    
+- # Tell the page to scroll down to the content wrapper upon page load
+= render 'shared/scroll_to_content_wrapper'

@@ -1,0 +1,65 @@
+%div{:lang => "en", :style => "color:#202020;width:90%"}
+  %div{:style => "padding:4px;padding-left:10px;background-color:#202020;-webkit-border-top-left-radius: 6px;-webkit-border-top-right-radius: 6px;-moz-border-radius-topleft: 6px;-moz-border-radius-topright: 6px;border-top-left-radius: 6px;border-top-right-radius: 6px;box-shadow: #555 0px 1px 8px;-moz-box-shadow: #555 0px 1px 8px;-webkit-box-shadow: #555 0px 1px 8px;"}
+    %a{:href => "http://brevidy.com", :style => "color:#FFF", :target => "_blank"}
+      %img{:alt => "Brevidy - The soul of video", :src => "#{Brevidy::Application::S3_BASE_URL}/images/emails/brevidylogo.png", :style => "display:block;border:0"}/
+  %div{:style => "background-color:#505050;height:4px;"}
+    / placeholder
+  %div{:style => "padding:14px;padding-bottom:2px;background-color:#f2f2f2;font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;font-size:13px;-webkit-border-bottom-left-radius: 6px;-webkit-border-bottom-right-radius: 6px;-moz-border-radius-bottomleft: 6px;-moz-border-radius-bottomright: 6px;border-bottom-left-radius: 6px;border-bottom-right-radius: 6px;box-shadow: #555 0px 1px 8px;-moz-box-shadow: #555 0px 1px 8px;-webkit-box-shadow: #555 0px 1px 8px;"}
+    %h2{:style => "font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;margin:0 0 16px;font-size:16px;font-weight:normal"}
+      Hi #{@user.name}!
+    %h2{:style => "font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;margin:0 0 16px;font-size:13px;font-weight:normal"}
+      It's been a crazy past two months at Brevidy and we wanted to update you about some of our new features!
+      %br/
+      %ul{:style => "margin-top:10px;margin-left:5px"}
+        %li{:style => "margin-bottom: 5px"}
+          %strong Now it's easier than ever to invite others to join Brevidy!
+          %h3{:style => "font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;margin:0 0 16px;font-size:13px;font-weight:normal"}
+            All you have to do is copy and paste this invitation link to Facebook, Twitter, Google Plus, or send it out in an e-mail!  
+            Up to 100 people can join using your link, so please do us a BIG favor and share it with people you think might use Brevidy as well! :)
+            %br/
+            %br/
+            %a{:href => "#{@invitation_link_url}"} 
+              #{@invitation_link_url}
+        %li{:style => "margin-bottom: 5px"}
+          %strong Brevidy now has an activity feed!
+          %h3{:style => "font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;margin:0 0 16px;font-size:13px;font-weight:normal"}
+            Find out what's been happening to your videos while you've been away by looking at your 
+            %a{:href => "#{@latest_activity_url}"} 
+              Latest Activity Feed!  
+            We'll let you know anytime you get a new follower, comment, badge, or someone adds your video to their favorites all in one place!
+            %br/
+            %br/
+            If you'd like to disable e-mail notifications for activity on Brevidy, you can do so within
+            %a{:href => "#{@account_url}"}
+              your account settings.
+        %li{:style => "margin-bottom: 5px"}
+          %strong Remember, you can share videos from YouTube and Vimeo as well!
+          %h3{:style => "font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;margin:0 0 16px;font-size:13px;font-weight:normal"}
+            You may not know this, but you don't have to have any videos of your own to use Brevidy! In fact, most people on Brevidy 
+            just find cool videos on YouTube or Vimeo and share them using the "Share a Link" link that's on the left side of 
+            every page!
+            %br/
+            %br/
+            Already have videos that you've uploaded to YouTube or Vimeo? Cool! Share those too! If you DO have videos of your own,
+            you can upload them directly to Brevidy via the 
+            %a{:href => "#{@new_video_url}"} Upload a Video
+            page!
+        %li{:style => "margin-bottom: 15px"}
+          %strong Watch what's happening on Brevidy!
+          %h3{:style => "font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;margin:0 0 16px;font-size:13px;font-weight:normal"}
+            You can watch all the newest videos as they're posted to Brevidy by checking out the 
+            %a{:href => "#{@whats_happening_url}"} What's Happening
+            page!
+    %h2{:style => "font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;margin:0 0 5px;font-size:13px;font-weight:normal"}
+      Thanks again for your support for Brevidy!  We are really passionate about what we do, and we know that we could not do 
+      this without you!  Keep up the great work and keep posting videos!!! :)
+    %h2{:style => "font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;margin:0 0 5px;font-size:13px;font-weight:normal;border-bottom: 1px dotted #808080;padding-bottom:10px;margin-bottom:5px"}
+      Sincerely,
+      %br/
+      The Brevidy Team
+    %p{:style => "font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;font-size:12px;color:#808080;margin-top:5px;"}
+      If you have questions about anything, feel free to reply back to this e-mail!
+      %br/
+      If you forgot your password, you can reset it on the 
+      %a{:href => "#{@forgotten_password_url}"} Forgotten Password
+      page.

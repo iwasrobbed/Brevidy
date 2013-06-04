@@ -1,0 +1,24 @@
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'videos/explore_content_titles'
+
+    - if signed_in?
+      - # Invitation sell
+      - if more_people_can_be_invited?
+        .info-message.mhl.centered
+          = link_to("Invite your friends and family", user_invitations_path(current_user))
+          to join Brevidy and start sharing videos with them today! 
+
+    = cache("find_people_page", :expires_in => 15.minutes) do
+      - # Search form
+      = form_tag user_search_path, :method => :get, :class => "user-search" do
+        = text_field_tag :q, @term, :placeholder => "Search for a name or email"
+        %span.search
+          %button{:type => "submit", :value => "Go"}
+
+      %ul.user-listing
+        = render User.show_random_people

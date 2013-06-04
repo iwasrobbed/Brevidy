@@ -1,0 +1,33 @@
+:plain
+  // Setup a custom template to use
+  var html_template = '#{escape_javascript(render(:partial => 'videos/share_dialog.html'))}';
+
+  // Show the custom dialog
+  brevidy.custom_dialog(html_template);
+  
+  // Set focus to the input field
+  $('input#shared_video_link').select();
+  
+  // Bind the ajax animation
+  $(document).bind('ajaxStart', function(e, request, options) {
+    $('#share-a-link-form .ajax-animation').show();
+    $('#share-a-link-form .ajax-errors').fadeOut('fast');
+  });
+  $(document).bind('ajaxComplete', function(e, request, options) {
+    $('#share-a-link-form .ajax-animation').hide();
+  });
+  
+  // Description: Handles AJAX error
+  $('#share-a-link-form').live('ajax:error', function(data, xhr, response) {
+    // get error message
+    var responseText = jQuery.parseJSON(xhr.responseText);
+    if (responseText !== null) { var responseMsg = responseText.error; }
+    if (typeof responseMsg == 'undefined') { responseMsg = 'There was an unknown error or the request timed out.  Please try again later'; }
+    
+    // set message
+    $('#share-a-link-form .ajax-errors').fadeOut('fast', function() {
+      $(this).text(responseMsg).fadeIn('fast');
+    });
+    
+    return false;
+  });

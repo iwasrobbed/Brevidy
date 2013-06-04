@@ -1,0 +1,54 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    - invitation_link = current_user.invitation_link
+    - invitation_url = signup_via_invitation_url(:invitation_token => invitation_link.token)
+  
+    .invitations-area
+      %h3.content-wrapper-title Invite other people to join Brevidy
+    
+      %h4
+        %strong Option A:
+        Share it yourself!
+      .share-it-yourself
+        %p
+          Send your friends this invitation link
+          %input{:type => "text", :readonly => true, :value => invitation_url}
+        %p.social-area
+          Or share it to your social networks!
+          / AddThis Button BEGIN
+          .addthis_toolbox.addthis_default_style.addthis_32x32_style{"addthis:url" => invitation_url, "addthis:title" => "I have some invites to Brevidy.com, a place to watch and share videos!" }
+            %a.addthis_button_facebook
+            %a.addthis_button_twitter
+            %a.addthis_button_email
+            %a.addthis_button_compact
+          / AddThis Button END
+    
+      %h4.email-area
+        %strong Option B: 
+        Send them an email asking them to join (we'll include the link in the email)
+
+      = form_tag(user_invite_people_path(current_user, @invitation), :class => "send-invites", :remote => true, :method => "POST") do
+        %label
+          Email addresses to invite:
+        = text_area_tag(:recipient_email, nil, :autocomplete => :off,
+          :placeholder => '"Smith, John" <john.smith@brevidy.com>, averagejoe@brevidy.com, <new.user@brevidy.com>')
+  
+        %label Include a personal message to send with the invitation:
+        = text_area_tag(:personal_message, nil, :autocomplete => :off, :maxlength => "250",
+          :placeholder => "(Optional) Personalize your invitation by including a short message" )
+        %label
+          %input.primary.medium.btn{:type => "submit", :value => "Send Invites"}
+            
+            
+- # Tell the page to scroll down to the content wrapper upon page load
+= render 'shared/scroll_to_content_wrapper'

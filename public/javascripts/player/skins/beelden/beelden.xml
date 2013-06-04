@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<skin version="1.1" name="beelden" author="LongTail Video">
+
+	<!-- Enable for 5.1 compatibility -->
+	<settings>
+		<!-- <setting name="frontcolor" value="0xffffff" /> -->
+	</settings>
+
+
+	<components>
+		<component name="controlbar">
+			<settings>
+				<setting name="backgroundcolor" value="0x202020" />
+				<setting name="margin" value="0" />
+				<setting name="fontsize" value="10" />
+				<setting name="fontcolor" value="0xf2f2f2" />
+				<setting name="buttoncolor" value="0xcccccc" />
+			</settings>
+
+			<layout>
+				<group position="left">
+					<button name="play" />
+					<divider />
+					<text name="elapsed" />
+				</group>
+				<group position="center">
+					<slider name="time" />
+				</group>
+				<group position="right">
+					<text name="duration" />
+					<divider />
+					<button name="blank" />
+					<divider />
+					<button name="mute" />
+					<slider name="volume" />
+					<divider />
+					<button name="fullscreen" />
+				</group>
+			</layout>
+
+			<elements>
+				<element name="background" src="background.png" />
+				<element name="capLeft" src="capLeft.png" />
+				<element name="capRight" src="capRight.png" />
+				<element name="divider" src="divider.png" />
+				<element name="playButton" src="playButton.png" />
+				<element name="playButtonOver" src="playButtonOver.png" />
+				<element name="pauseButton" src="pauseButton.png" />
+				<element name="pauseButtonOver" src="pauseButtonOver.png" />
+				<element name="timeSliderRail" src="timeSliderRail.png" />
+				<element name="timeSliderBuffer" src="timeSliderBuffer.png" />
+				<element name="timeSliderProgress" src="timeSliderProgress.png" />
+				<element name="timeSliderThumb" src="timeSliderThumb.png" />
+				<element name="blankButton" src="blankButton.png" />
+				<element name="muteButton" src="muteButton.png" />
+				<element name="muteButtonOver" src="muteButtonOver.png" />
+				<element name="unmuteButton" src="unmuteButton.png" />
+				<element name="unmuteButtonOver" src="unmuteButtonOver.png" />
+				<element name="volumeSliderRail" src="volumeSliderRail.png" />
+				<element name="volumeSliderBuffer" src="volumeSliderBuffer.png" />
+				<element name="volumeSliderProgress" src="volumeSliderProgress.png" />
+				<element name="fullscreenButton" src="fullscreenButton.png" />
+				<element name="fullscreenButtonOver" src="fullscreenButtonOver.png" />
+				<element name="normalscreenButton" src="normalscreenButton.png" />
+				<element name="normalscreenButtonOver" src="normalscreenButtonOver.png" />
+			</elements>
+		</component>
+
+		<component name="display">
+			<settings>
+				<setting name="backgroundcolor" value="0x444444" />
+				<setting name="bufferinterval" value="5" />
+				<setting name="bufferrotation" value="3" />
+			</settings>
+			<elements>
+				<element name="background" src="background.png" />
+				<element name="playIcon" src="playIcon.png" />
+				<element name="playIconOver" src="playIconOver.png" />
+				<element name="bufferIcon" src="bufferIcon.png" />
+				<!-- Enable for 5.0 compatibility --> 
+				<element name="errorIcon" src="background.png" />
+			</elements>
+		</component>
+
+		<component name="dock">
+			<elements>
+				<element name="button" src="button.png" />
+				<element name="buttonOver" src="button.png" />
+			</elements>
+		</component>
+
+		<component name="playlist">
+			<settings>
+				<setting name="fontcolor" value="0xcccccc" />
+				<setting name="backgroundcolor" value="0x444444" />
+				<setting name="overcolor" value="0xffffff" />
+				<setting name="activecolor" value="0xffffff" />
+			</settings>
+			<elements>
+				<element name="item" src="item.png" />
+				<element name="itemOver" src="itemOver.png" />
+				<element name="itemImage" src="itemImage.png" />
+				<element name="sliderRail" src="sliderRail.png" />
+				<element name="sliderThumb" src="sliderThumb.png" />
+				<element name="sliderCapTop" src="sliderCapTop.png" />
+				<element name="sliderCapBottom" src="sliderCapBottom.png" />
+			</elements>
+		</component>
+
+		<component name="hd">
+			<elements>
+				<element name="dockIcon" src="dockIcon.png" />
+				<element name="controlbarIcon" src="controlbarIcon.png" />
+			</elements>
+		</component>
+		
+		<component name="sharing">
+			<elements>
+				<element name="embedScreen" src="embedScreen.png" />
+				<element name="shareScreen" src="shareScreen.png" />
+			</elements>
+		</component>
+
+	</components>
+
+</skin>

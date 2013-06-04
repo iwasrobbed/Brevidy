@@ -1,0 +1,17 @@
+%li{:class => hidden_comment ? "hidden-comment" : "", "data-video-id" => video.id}
+  - comment_owner ||= get_object_owner(comment)
+  = link_to(user_path(comment_owner)) do
+    = image_tag("#{comment_owner.image.blank? ? 'default_user_35px.jpg' : comment_owner.image_url(:small_profile) }", 
+                :alt => "#{comment_owner.name}", :size => "35x35")
+    
+  - # Generate link for deleting the comment
+  - if current_user_owns?(comment) || current_user_owns?(video)
+    - path_to_this = @viewing_via_token_access ? user_video_comment_path(video_owner, video, comment, :channel_token => video.channel.public_token) : user_video_comment_path(video_owner, video, comment)
+    = link_to("", path_to_this, :class => "delete-comment tooltip", :title => "Delete Comment", :remote => true, :method => "DELETE")
+  
+  .comment-meta
+    %a.comment-owner{:href => "#{user_path(comment_owner)}"} #{comment_owner.name}
+    %span.content
+      #{auto_link(h(comment.content), :html => {:target => "_blank" })}
+    %p.time-ago
+      #{time_ago_in_words(comment.created_at)} ago

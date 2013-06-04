@@ -1,0 +1,91 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+
+  - # Main (White) Content Wrapper
+  .content-wrapper.standard-padding
+  
+    = cache("video_faq_page") do
+      %h3.mtl Frequently Asked Questions about Uploading Videos
+  
+      %ul.unstyled
+        %li
+          %h4 How large can my video file be?
+        %li
+          The size of uploaded videos is limited to 750 MB.  You will not be able to upload anything larger in size,
+          and will have to shorten your video or lower its quality using
+          #{link_to("video editing software", "http://en.wikipedia.org/wiki/List_of_video_editing_software", :target => "_blank")}
+          before retrying the upload.
+      
+      %ul.unstyled
+        %li
+          %h4 How long can my video be?
+        %li
+          We don’t care!  As long as it fits within the 750 MB limit, it can be uploaded.  However, all videos on Brevidy
+          will be trimmed to a maximum of 10 minutes in length.  If your video is longer than this, we will only display
+          the first 10 minutes... so make them good!
+      
+      %ul.unstyled
+        %li
+          %h4 What video formats do you support?
+        %li
+          We support the majority of containers/codecs out there!  We’ve got elves in the backroom capable
+          of handling pretty much whatever you throw at us.  However if they have an issue with your particular video, we’ll
+          be in touch to let you know.
+          %br
+          %br
+          FYI: Videos are encoded using a codec (one for the video and a different one for the audio), and then packaged up in a
+          container format (usually denoted by the file extension).  For instance, if you take a video with your cell phone,
+          it may be an MP4 container (filename.mp4), and be encoded using the H.264 video codec and the AAC audio codec.
+          If your head’s not spinning yet, take a look at
+          #{link_to("this chart", "http://en.wikipedia.org/wiki/Comparison_of_container_formats", :target => "_blank")}
+          for more details.
+
+      %ul.unstyled
+        %li
+          %h4 What video resolutions do you support?
+        %li
+          We will accept videos of any resolution, however the maximum resolution displayed is 1280 X 720.  If the video is
+          larger than this resolution, we will scale it down while maintaining the aspect ratio.  If your video is smaller
+          than this, then its resolution will not be changed.
+          %br
+          %br
+          FYI: Video resolution is denoted by number of horizontal pixels X the number of vertical pixels (pixels are the
+          tiny dots in a video).  HD video resolutions are denoted by just their vertical resolution.  For instance 720p =
+          1280 horizontal pixels by 720 vertical pixels.
+
+    
+      %ul.unstyled
+        %li
+          %h4 What will my output video look like?
+        %li
+          Your video will be encoded in the MP4 format using the H.264 video codec and AAC audio codec for maximum
+          compatibility across desktop and mobile devices along with the most popular browsers available with each platform.
+          It will have a maximum resolution of 1280 X 720.  The maximum length will be 10 minutes.
+      
+      %ul.unstyled
+        %li
+          %h4 What if there’s something wrong with my video?
+        %li
+          %ul
+            %li
+              If your video shows the processing thumbnail for an unreasonable amount of time, first try a refresh of the
+              webpage.  If the thumbnail doesn’t change to one that belongs to the video, then there may be an issue with
+              the video, in which case we’re actively working the issue and you’ll receive an email from us regarding the status.
+            %li
+              If your video plays, but the quality isn’t what you would expect, you can flag the video to have us look at
+              it.  To do so, click on the “Flag” link to the right of the video, select the first option “There is something
+              wrong with my video.” leave an optional description of the issue, and click on the Report Video button.  Once
+              we’ve taken a look at the video, we’ll get back in touch with you regarding its status.
+            %li
+              If none of the videos play on your PC/Mac, ensure that you have JavaScript enabled and you have the latest
+              version of
+              #{link_to("Adobe Flash Player", "http://get.adobe.com/flashplayer/", :target => "_blank")}
+              installed or have a browser that supports HTML 5.
+            %li
+              If videos play on your PC/Mac, but take a long time to buffer, it may be that your Internet connection is too
+              slow for the quality of the video.  We recommend a connection speed of at least 1Mbps. You can test your
+              connection speed
+              #{link_to("here", "http://www.speedtest.net/", :target => "_blank")}.
+            %li
+              If videos don’t play on your mobile device, it might be because that particular video has too high of a
+              resolution for your device.

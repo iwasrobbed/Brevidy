@@ -1,0 +1,3 @@
+- badges_count == 1 ? badge_message = "view badge" : badge_message = "view all #{badges_count} badges"
+- path_to_this = @viewing_via_token_access ? user_video_badges_dialog_path(video_owner, video, :channel_token => video.channel.public_token) : user_video_badges_dialog_path(video_owner, video)
+(#{link_to(badge_message, path_to_this, "data-video-id" => "#{video.id}", :remote => true, "data-method" => "GET")})

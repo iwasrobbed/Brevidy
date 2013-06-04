@@ -1,0 +1,28 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'shared/content_titles'
+    
+    .private-channel-error
+      = image_tag("private_large.png", :alt => "This channel is private", :size => "117x110")
+      
+      .message-area
+        %h4 This channel is private.
+        %p You need to request access to view any videos in this channel.
+      
+        - if signed_in?
+          = link_to("Request Access", user_channel_subscribe_path(@user, @channel), :class => "subscribe btn large", :remote => true, :method => "POST")
+        - else
+          #{link_to("Sign up", signup_path)} or #{link_to("Login", login_path)} to request access.
+        
+- # Tell the page to scroll down to the content wrapper upon page load
+= render 'shared/scroll_to_content_wrapper'

@@ -1,0 +1,35 @@
+#brevidy-modal.modal.hide
+  = form_tag(user_add_to_channel_path(current_user), :id => "add-to-channel-form", :method => "POST", :remote => true) do
+    .modal-header
+      %h3 Add this video to one of your channels
+    .modal-body
+      - if current_user_owns?(video)
+        .add-to-channel-warning
+          .p
+            %strong Note:
+            You are about to create a copy of a video you already posted.  Did you want to 
+            = link_to("organize this video into a different channel", edit_user_video_path(current_user, video)) 
+            instead?
+          .p.mtxl
+            = link_to("Click here if you still want to create a copy of this video", "#", :class => "show-add-video-meta-area")
+          
+      .add-video-meta-area{:style => current_user_owns?(video) ? "display:none" : ""}
+        .video-preview-area
+          %input{:name => "video_id", :value => video.id, :type => "hidden"}
+          = image_tag(video.get_thumbnail_url(video.selected_thumbnail), :alt => video.title, :size => "100x54")
+          %p.title
+            %strong #{video.title}
+          %p.description #{truncate(video.description, :length => 100, :omission => '...')}
+        
+        .channel-selection-area
+          %p 
+            %strong Which channel should it go in?
+          = render 'videos/channel_options'
+        
+    .modal-footer
+      .ajax-errors
+        - # placeholder for ajax errors to be shown
+      
+      = submit_tag("Add to Channel", :id => "add-to-channel", :class => "modal-confirm-btn btn primary", :style => current_user_owns?(video) ? "display:none" : "")
+      %a.modal-cancel-btn.btn.secondary{:href => "#"} Cancel
+      = image_tag("ajax.gif", :class=>"ajax-animation", :size => "16x16")

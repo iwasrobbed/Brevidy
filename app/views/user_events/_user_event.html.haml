@@ -1,0 +1,16 @@
+%li.zebra-striped{:class => seen_by_user ? "" : "new-event-marker"}
+    
+  = link_to(user_path(user), :class => "user-image") do
+    = image_tag("#{user.image.blank? ? 'default_user_35px.jpg' : user.image_url(:small_profile) }", 
+      :alt => "#{user.name}", :size => "35x35")
+    %i{:class => "event#{object_class}"}
+  
+  .user-meta
+    = link_to(user.name, user_path(user))
+  
+    = render :partial => "user_events/#{event_type}_event.html", :locals => { :object => object, :video => video }
+  
+    - unless ['comment', 'comment_response', 'channel_request'].include?(event_type)
+      - # Show how long ago it occured
+      %span.gray
+        #{time_ago_in_words(object.created_at)} ago

@@ -1,0 +1,13 @@
+%select.medium.birthday_month{:name => "birthday_month"}
+  = options_for_select((1..12).map {|m| [Date::MONTHNAMES[m], m]})
+%select.medium.birthday_day{:name => "birthday_day"}
+  = options_for_select((1..31))
+%select.medium.birthday_year{:name => "birthday_year"}
+  = options_for_select((1901..Date.today.year).to_a.reverse)
+  
+- # Set the select values if they were passed in
+- if defined?(the_month) 
+  :javascript
+    $('select.birthday_month').val("#{the_month}");
+    $('select.birthday_day').val("#{the_day}");
+    $('select.birthday_year').val("#{the_year}");

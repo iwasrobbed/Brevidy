@@ -1,0 +1,229 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+
+  - # Main (White) Content Wrapper
+  .content-wrapper.standard-padding
+
+    - # Set up the tabs
+    %ul.tabs
+      %li.active
+        %a{:href => "#upload-image"} Profile Picture
+      %li
+        %a{:href => "#background-image"} Background
+      %li
+        %a{:href => "#user-info"} User Info
+      %li
+        %a{:href => "#notifications"} Notifications
+      %li
+        %a{:href => "#connected-services"} Connected Services
+      %li
+        %a{:href => "#password"} Password
+      %li
+        %a{:href => "#blocked-people"} Blocked People
+        
+        
+    - # Set up the content areas for the tabs
+    .pill-content
+      #upload-image.active
+        .info-message
+          %strong Note: 
+          Maximum file size of 2 MB.  Please keep it clean and only upload your own images.
+          
+        #progress-bar
+          .progress{:style => "width: 0%;"}
+            %span{:style => "display:none;"}
+              Uploading
+  
+        :plain      
+          #{s3_uploader('image')}
+        %a{:id => "select-image", :href => "#", :class => "medium primary btn"} Select Image
+        
+      #background-image
+        .info-message
+          Choose whether you want Brevidy to have a light or dark background.
+          
+        .background-image-area
+          = link_to(user_update_background_image_path(current_user, :background_image_id => 0), :class => "set-new-background-image thumbnail light-bg", :remote => true, :method => :put) do
+            = image_tag("backgrounds/small/light.jpg", :size => "200x200")
+            .mts.centered Light
+          = link_to(user_update_background_image_path(current_user, :background_image_id => 1), :class => "set-new-background-image thumbnail dark-bg", :remote => true, :method => :put) do
+            = image_tag("backgrounds/small/dark.jpg", :size => "200x200")
+            .mts.centered Dark
+        
+      #user-info
+        .info-message
+          %strong Note: 
+          Only your 
+          %strong Username, 
+          %strong Name
+          and
+          %strong Location
+          are publicly viewable; everything else is kept private.  Usernames can only be changed 
+          %strong once a month.
+        
+        = form_tag(user_account_update_path(@user), :id => "update-user-info", :class => "prl", :remote => true, :method => :put) do |f|
+          %label
+            Username
+          .input
+            = text_field(:user, :username, :maxlength => "30", 'data-path' => username_availability_path)
+            %span http://brevidy.com/#{@user.username}
+            
+          %label
+            Name
+          .input
+            = text_field(:user, :name, :maxlength => "30")
+        
+          %label
+            Location
+          .input
+            = text_field(:user, :location, :maxlength => "50")
+         
+          %label.align-to-top
+            = image_tag("private_small.png", :alt => "Private Information", :title => "Private Information", :size => "14x14", :class => "semi-transparent")
+            E-mail Address
+          .input
+            = text_field(:user, :email, :maxlength => "200")
+          
+          .mvl
+            %label.align-to-top
+              = image_tag("private_small.png", :alt => "Private Information", :title => "Private Information", :size => "14x14", :class => "semi-transparent")
+              Birthday
+            .input
+              = render :partial => 'shared/select_birthday', :locals => { :the_month => @user.birthday.strftime("%-m"), 
+                                                                          :the_day => @user.birthday.strftime("%d"), 
+                                                                          :the_year => @user.birthday.strftime("%Y")}
+          
+          .mvl
+            %label.align-to-top
+              = image_tag("private_small.png", :alt => "Private Information", :title => "Private Information", :size => "14x14", :class => "semi-transparent")
+              Gender
+            .input  
+              %select.medium{:name => "user[gender]"}
+                %option{:value => ""} Choose your gender:
+                %option{:value => "Male"} Male
+                %option{:value => "Female"} Female
+                
+                - # Set the gender if it's defined
+                - unless @user.gender.blank?
+                  :javascript
+                    $('select[name="user[gender]"]').val("#{@user.gender}");
+        
+          %br/
+          .button-area
+            %input.medium.primary.btn{:type => "submit", :value => "Update Information"}
+            = image_tag("ajax.gif", :class=>"ajax-animation", :size => "16x16")
+            = image_tag("green_checkmark.png", :class=>"green-checkmark", :size => "16x16")
+    
+    
+      #notifications
+        .info-message
+          %strong Note:
+          All events, other than those marked with an asterisk 
+          = succeed "," do
+            %strong * 
+          are shown on your
+          = link_to("Latest Activity", user_latest_activity_path(current_user))
+          feed.
+        
+        = form_tag(user_account_notifications_path(@user), :method => :put, :remote => true, :id => "update-notifications") do
+          = check_box("user", "send_email_for_private_channel_request", { }, "true", "false")
+          Send me an e-mail when someone requests access to one of my private channels
+          %br/
+          = check_box("user", "send_email_for_new_subscriber", { }, "true", "false")
+          Send me an e-mail when someone subscribes to one of my channels
+          %br/
+          = check_box("user", "send_email_for_new_badges", { }, "true", "false")
+          Send me an e-mail when I receive a new badge on my videos
+          %br/
+          = check_box("user", "send_email_for_new_comments", { }, "true", "false")
+          Send me an e-mail when I receive a new comment on my videos
+          %br/
+          = check_box("user", "send_email_for_replies_to_a_prior_comment", { }, "true", "false")
+          Send me an e-mail when someone comments on a video that I have also commented on
+          -# %br/
+          -# = check_box("user", "send_email_for_featured_video", { }, "true", "false")
+          -# Send me an e-mail when one of my videos is featured
+          %br/
+          = check_box("user", "send_email_for_encoding_completion", { }, "true", "false")
+          * Send me an e-mail when my uploaded video is done encoding and is ready to be watched
+          %br/
+          
+          %br/
+          .button-area
+            %input.medium.primary.btn{:type => "submit", :value => "Update Notifications"}
+            = image_tag("ajax.gif", :class=>"ajax-animation", :size => "16x16")
+            = image_tag("green_checkmark.png", :class=>"green-checkmark", :size => "16x16")
+      
+      
+      #connected-services
+        .info-message
+          This allows you to login with one click versus remembering your email/password.  
+          It will also give you the option of easily posting videos to your social networks.
+          %br/
+          %br/
+          %strong
+            Note: 
+          We will NEVER post to your Facebook or Twitter timeline without your consent.
+        
+        %ul.unstyled
+          %li.mvm
+            - if @facebook_connected
+              = image_tag("green_checkmark.png", :size => "16x16")
+              %strong Your Facebook account is currently connected.
+              (#{link_to("Disconnect", user_social_network_path(current_user, @facebook_connected, :provider => "facebook"), :remote => true, "data-method" => "DELETE")})
+            - else
+              = link_to(image_tag("social_connect_facebook.png", :size => "200x38"), "#{root_url}auth/facebook")
+          %li.mvm
+            - if @twitter_connected
+              = image_tag("green_checkmark.png", :size => "16x16")
+              %strong Your Twitter account is currently connected.
+              (#{link_to("Disconnect", user_social_network_path(current_user, @twitter_connected, :provider => "twitter"), :remote => true, "data-method" => "DELETE")})
+            - else
+              = link_to(image_tag("social_connect_twitter.png", :size => "200x38"), "#{root_url}auth/twitter")
+
+
+      #password
+        .info-message
+          %strong
+            Note:
+          Your password must be at least 6 characters long.  Try to choose one that someone else could not easily guess.
+            
+        = form_tag(user_account_password_path(@user), :method => "PUT", :remote => true, :id => "update-password") do
+          %label Old Password
+          .input
+            = password_field_tag :old_password, nil, :placeholder => "old password"
+          %label New password:
+          .input
+            = password_field_tag :new_password, nil, :placeholder => "new password"
+          %label Confirm password:
+          .input
+            = password_field_tag :confirm_new_password, nil, :placeholder => "confirm new password"
+            
+          %br/
+          .button-area
+            %input.medium.primary.btn{:type => "submit", :value => "Update"}
+            = image_tag("ajax.gif", :class=>"ajax-animation", :size => "16x16")
+            = image_tag("green_checkmark.png", :class=>"green-checkmark", :size => "16x16")
+          
+          
+      #blocked-people
+        - ze_blocked_users ||= @user.people_they_are_blocking
+        - if ze_blocked_users.empty?
+          .info-message
+            You are not currently blocking any people.
+        - else
+          %ul
+            - ze_blocked_users.each do |u|
+              %li
+                %strong #{u.name}
+                = link_to("(unblock)", user_unblock_path(u), :class => "unblock-user", :remote => true, :method => :delete)
+              
+                
+- # Tell the page to scroll down to the content wrapper upon page load
+= render 'shared/scroll_to_content_wrapper'

@@ -1,0 +1,30 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+  
+    .search-area  
+      .info-message
+        %span.results-message
+          - if @term.blank?
+            Looking for something interesting?  Try using the search box at the top of the page.
+          - else
+            Found #{pluralize(@results_count, @search_type)} for "#{@term}"
+          
+        - # Search form
+        = form_tag user_search_path, :method => :get, :class => "user-search" do
+          = text_field_tag :q, @term, :placeholder => "Search for a name or email"
+          %span.search
+            %button{:type => "submit", :value => "Go"}
+  
+    - if @users.blank?
+      .okayguy
+        = image_tag("okayguy.png", :alt => "Okay", :size => "256x275")
+    - else
+      %ul.user-listing
+        = render @users
+  
+        = will_paginate @users
+  
+        = render :partial => "shared/infinite_scrolling", :locals => { :item_selector => ".zebra-striped" }

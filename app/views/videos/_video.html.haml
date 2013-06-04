@@ -1,0 +1,249 @@
+- # Initialize some objects for each video
+- # such as badges, comments, tags, etc.
+- video_owner ||= get_object_owner(video)
+- comments ||= video.comments
+- tags ||= video.tags
+- badges_count ||= video.badges.count
+- unique_badge_types_and_counts ||= video.unique_badge_types_and_counts
+
+- # checks that the video isn't processing so we will
+- # allow the user to interact with it (play it, badge it, etc.)
+- video_is_clickable ||= video.is_status?(VideoGraph::READY)
+
+- # checks whether we should expand the video or not
+- expand_the_video = defined?(expand_video) ? expand_video : false
+
+- # Checks if the video is a YouTube/Vimeo player
+- video_is_not_remote ||= video.remote_video_id.blank?
+
+.video-post{"data-video-id"=>"#{video.id}"}
+  .row.heading
+    = link_to(user_path(video_owner)) do
+      = image_tag("#{video_owner.image.blank? ? 'default_user_50px.jpg' : video_owner.image_url(:medium_profile) }", :alt => "#{video_owner.name}", :size => "50x50")
+    .video-title-and-info
+      %h3
+        = video.title
+      %p
+        Shared by 
+        = link_to(video_owner.name, user_path(video_owner))
+        into their
+        = link_to(video.channel.title, user_channel_path(video_owner, video.channel))
+        channel 
+        %span.gray
+          - begin
+            - if video_is_not_remote
+              - via_user = video.video_graph.get_user_who_uploaded_this
+              - unless via_user.blank? || (video_owner.id == via_user.id)
+                (via #{link_to(via_user.name, user_path(via_user))})
+          - rescue
+
+          #{time_ago_in_words(video.created_at)} ago
+  
+    - # Settings drop down menu
+    %ul.settings-menu
+      %li.dropdown{"data-dropdown" => "dropdown"}
+        %a.settings-icon.dropdown-toggle.prevent-jump{:href => "#"}
+          %i
+        %ul.dropdown-menu
+          %li
+            = link_to("Flag Video", user_video_flag_dialog_path(video_owner, video), :remote => true, "data-method" => "GET")
+          - if current_user_owns?(video)
+            %li
+              = link_to("Edit Video", edit_user_video_path(video_owner, video))
+            %li
+              = link_to("Delete Video", user_video_path(video_owner, video), :class => "delete-video", "data-video-id" => "#{video.id}")
+  
+  .row.video-meta
+    .player-area{"data-video-id"=>"#{video.id}", :style => expand_the_video ? "display:block" : ""}
+      .collapse-player-controls
+        %a.pull-right{:href => "#", "data-video-id" => "#{video.id}"} Close video
+        
+      .player-object{:id => "brevidy-player-#{video.id}"}
+        - if expand_the_video
+          = render :partial => 'videos/embed_code', :locals => { :video => video, :individual_player => true }
+        - else
+          - # Player code will be AJAX'ed in here
+    
+    .thumbnail-and-badges
+      %a{:href => "#"}
+        - path_to_this = @viewing_via_token_access ? user_video_embed_code_path(video_owner, video, :channel_token => video.channel.public_token) : user_video_embed_code_path(video_owner, video)
+        .thumbnail{:class => video_is_clickable ? "" : "processing", "data-video-id"=>"#{video.id}", "data-video-path" => video_is_clickable ? "#{path_to_this}" : "", :style => expand_the_video ? "display:none" : ""}
+          = image_tag(video_is_clickable ? video.get_thumbnail_url(video.selected_thumbnail) : "processing.png", :alt => video.title, :size => "250x134")
+          - if video_is_clickable
+            %i.play-icon
+              = image_tag("play.png", :alt => "Play", :size => "60x45")
+        
+      - if video_is_clickable
+        .show-badges{"data-video-id"=>"#{video.id}"}
+          - if badges_count == 0
+            %p.no-badges-given-yet{:class => (badges_count != 0) ? "mtm" : ""}
+              No badges given yet.
+              
+              - if signed_in?
+                %a.give-first-badge{:href=>"#", "data-video-id"=>"#{video.id}"} Give one!
+          - else
+            .badges
+              %ul
+                - unique_badge_types_and_counts[:badge_sets].first(5).each do |icon, count|
+                  = render :partial => "badges/badge", :locals => { :icon => icon, :count => count }
+                  
+            %p.view-all-badges{"data-video-id"=>"#{video.id}"}
+              = render :partial => "badges/view_all_badges.html", 
+                       :locals => { :badges_count => badges_count, :video_owner => video_owner, :video => video }
+            
+    .description-and-controls
+      .description.expandable
+        - if video.description.blank?
+          %i No description given for this video
+        - else
+          = simple_format(auto_link(h(video.description), :html => { :target => "_blank" }), {}, :sanitize => false)
+      
+      - if video_is_clickable    
+        .controls
+          %ul
+            - if current_user_owns?(video) || !video.channel.private?
+              %li.video-control-link
+                - if current_user.blank?
+                  = link_to(login_path, :class => "show-msg-modal", "data-modal-title" => "Please login or sign up", "data-modal-message" => "You must <a href='#{login_path}'>Login</a> or <a href='#{signup_path}'>Sign up</a> before you can add a video to a channel.") do
+                    = image_tag("add_to_channel.png", :alt => "Channel Icon", :size => "13x13", :class => "control-icon")
+                    %span>< Add To Channel
+                - else
+                  = link_to(user_add_to_channel_dialog_path(current_user, :video_id => video.id), :class => "add-to-channel-link", "data-video-id" => "#{video.id}", :remote => true, "data-method" => "GET") do
+                    = image_tag("add_to_channel.png", :alt => "Channel Icon", :size => "13x13", :class => "control-icon")
+                    %span>< Add To Channel
+          
+            %li.video-control-link
+              %a.badge-link{:href => "#", "data-video-id" => "#{video.id}"}
+                = image_tag("badge_it.png", :alt => "Badge Icon", :size => "13x13", :class => "control-icon")
+                %span>< Badge It
+              %span.badge-arrow{"data-video-id" => "#{video.id}"}
+            
+            %li.video-control-link
+              %a.comment-link{:href => "#", "data-video-id" => "#{video.id}"}
+                = image_tag("comment.png", :alt => "Comment Icon", :size => "13x13", :class => "control-icon")
+                %span>< Comment
+              %span.comment-arrow{"data-video-id" => "#{video.id}", :style => comments.blank? ? "display: none" : ""}
+            
+            - if current_user_owns?(video) || !video.channel.private?
+              %li.video-control-link
+                %a.share-link{:href => "#", "data-video-id" => "#{video.id}"}
+                  = image_tag("share.png", :alt => "Share Icon", :size => "13x13", :class => "control-icon")
+                  %span>< Share
+                %span.share-arrow{"data-video-id" => "#{video.id}"}
+            
+            %li.video-control-link
+              %a.tag-link{:href => "#", "data-video-id" => "#{video.id}"}
+                = image_tag("tags.png", :alt => "Tags Icon", :size => "13x13", :class => "control-icon")
+                %span>< Tags
+              %span.tag-arrow{"data-video-id" => "#{video.id}"}
+            
+            %li.ajax-animation{"data-video-id" => "#{video.id}"}
+              = image_tag("ajax.gif", :size => "16x16")
+        
+        - # -----------
+        - # BADGES AREA
+        - # -----------
+        .badges-area{"data-video-id" => "#{video.id}"}
+          - # Render all of the active badges to choose from
+          = render :partial => "badges/give_badges.html", :collection => get_all_active_badges, 
+                   :locals => { :video => video, 
+                                :video_owner => video_owner, 
+                                :all_badge_types => unique_badge_types_and_counts[:all_badge_types] }
+      
+        - # -------------
+        - # COMMENTS AREA
+        - # -------------
+        .comments-area{"data-video-id" => "#{video.id}", :style => comments.blank? ? "display: none" : ""}
+          - if current_user.blank? && comments.blank?
+            %p.no-content-msg
+              %i No one has commented on this video yet.
+            
+          - else
+            %ul.comments-list
+              - if comments.size > 3
+                %li.show-all-comments 
+                  %a.show-all-comments{:href => "#", "data-video-id" => "#{video.id}"}
+                    Show all #{comments.size} comments
+              
+                - # Hide everything except the latest 3 comments
+                = render :partial => "comments/comment.html", 
+                  :collection => comments[-comments.size..-4], 
+                  :locals => { :video => video, :video_owner => video_owner, :hidden_comment => true }
+              
+                - # Show only the latest 3 comments in ASC order 
+                = render :partial => "comments/comment.html", :collection => comments[-3..-1], 
+                  :locals => { :video => video, :video_owner => video_owner, :hidden_comment => false }
+                
+              - else
+                = render :partial => "comments/comment.html", :collection => comments, 
+                  :locals => { :video => video, :video_owner => video_owner, :hidden_comment => false }
+                
+          - unless current_user.blank?
+            .comment-box
+              .comment-form-wrapper
+                = form_tag(user_video_comments_path(video_owner, video), :method => "POST", :remote => true, :class => "post-new-comment", "data-video-id" => "#{video.id}") do
+                  - if @viewing_via_token_access
+                    %input{:name => "channel_token", :type => "hidden", :value => "#{video.channel.public_token}"}/
+                  
+                  = text_area_tag(:content, nil, :autocomplete => :off, "data-video-id" => "#{video.id}", :placeholder => "Write a comment")
+                  .button-wrapper{"data-video-id" => "#{video.id}"}
+                    %input.btn.primary.small{:type => "submit", :value => "Comment", "data-video-id" => "#{video.id}"}
+      
+        - # ----------
+        - # SHARE AREA
+        - # ----------
+        - if current_user_owns?(video) || !video.channel.private?
+          .share-area{"data-video-id" => "#{video.id}"}
+            .share-content
+              - # the user owns the video or the channel holding the video is public
+              #{link_to("Social sharing", "#", :class => "share-socially lighten-to-blue")} · #{link_to("Link to this video", "#", :class => "link-to-video")} · #{link_to("Embed this video", "#", :class => "embed-video")} · #{link_to("Email this video", "#", :class => "email-video")}
+              
+              - public_url_to_this_video = public_video_url(:public_token => video.public_token)
+              .social-sharing
+                / AddThis Button BEGIN
+                .addthis_toolbox.addthis_default_style.addthis_32x32_style{"addthis:url" => public_url_to_this_video, "addthis:title" => "Check out this video! '#{truncate(video.title, :length => 70, :omission => '...')}'" }
+                  %a.addthis_button_facebook
+                  %a.addthis_button_twitter
+                  %a.addthis_button_stumbleupon
+                  %a.addthis_button_reddit
+                  %a.addthis_button_digg
+                  %a.addthis_button_gmail
+                  %a.addthis_button_compact
+                / AddThis Button END
+              
+              .public-link
+                %input{:type => "text", :readonly => true, :value => public_url_to_this_video}
+          
+              .embed-code
+                %textarea{:readonly => true}
+                  :plain
+                    <iframe src="#{embed_video_url(:public_token => video.public_token)}" width="560" height="310" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+              
+              .email-form
+                = form_tag(user_video_share_via_email_path(video_owner, video), :class => "share-via-email", :remote => true, :method => "POST") do
+                  %label{:for => "recipient_email"} Email Address
+                  %input{:name => "recipient_email", :type => "text", :placeholder => "email address"}
+                  %label{:for => "personal_message"} Personal Message (optional)
+                  %textarea{:name => "personal_message", :placeholder => "Personalize your email!"}
+                  %input.btn.primary.small{:type => "submit", :value => "Send"}
+                
+          
+        - # ---------
+        - # TAGS AREA
+        - # ---------
+        .tags-area{"data-video-id" => "#{video.id}"}
+          - if tags.blank?
+            %p.no-content-msg
+              %i
+                There are currently no tags organizing this video.
+                - if current_user_owns?(video)
+                  = link_to("Give it some", edit_user_video_path(video_owner, video))
+        
+          - else
+            %ul
+              - tags.each do |t|
+                %li
+                  = link_to(t.content, video_search_path(:tag => t.content))
+                  - if current_user_owns?(video)
+                    = link_to("x", user_video_tag_path(video_owner, video, t), :class => "tooltip remove-tag",
+                      :method => "DELETE", :remote => true, :title => "Remove tag", "data-video-id" => "#{video.id}")

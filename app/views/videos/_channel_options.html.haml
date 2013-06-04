@@ -1,0 +1,30 @@
+.channel-select-elements
+  %select#select-a-channel-via-upload.medium{:name => "channel_id"}
+    - current_user.channels.each do |c|
+      %option{:value => "#{c.id}"} #{c.title}
+    %option.dash-divider{:value => "divider", :disabled => "disabled"} -----------------
+    %option{:value => "add_to_new_channel"} Add to new channel
+
+  .add-to-new-channel-via-upload-area 
+    = image_tag("right_arrow_icon.png", :alt => "", :size => "25x25")
+    = text_field_tag(:channel_name, nil, :placeholder => "Name your new channel")
+    %label
+      %input{:type => "checkbox", :name => "channel_is_private", :value => "true"}
+      %span Private?
+  
+  :javascript
+    // Check if we are adding a new channel
+    $('#select-a-channel-via-upload').live('change', function () {
+      var selected_val = $('#select-a-channel-via-upload option:selected').val();
+  
+      if (selected_val == "add_to_new_channel") {
+        $('.add-to-new-channel-via-upload-area').css('display', 'inline');
+      } else {
+        $('.add-to-new-channel-via-upload-area').fadeOut('fast');
+      }
+    });
+
+  - # Set the video channel value if need be
+  - if defined?(@video)
+    :javascript
+      $('#select-a-channel-via-upload').val('#{@video.channel.id}');

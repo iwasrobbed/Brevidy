@@ -1,0 +1,14 @@
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'videos/explore_content_titles'
+  
+    - unless @videos.blank?
+      = render @videos
+    
+      = will_paginate @videos
+    
+      = render :partial => "shared/infinite_scrolling", :locals => { :item_selector => ".video-post" }

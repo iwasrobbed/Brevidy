@@ -1,0 +1,3 @@
+- if klass.errors.any?
+  - klass.errors.full_messages.each do |msg|
+    %div{:data => {:error => "#{msg}"}}= msg

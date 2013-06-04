@@ -1,0 +1,64 @@
+= form_for(@user, :html => { :class => "ptxs"}, :remote => true) do |f|
+  .landing_login_form
+    %input{:type => "hidden", :name => "uid", :value => @uid}
+    %input{:type => "hidden", :name => "provider", :value => @provider}
+    %input{:type => "hidden", :name => "oauth_token", :value => @oauth_token}
+    %input{:type => "hidden", :name => "oauth_token_secret", :value => @oauth_token_secret}
+    %input{:type => "hidden", :name => "social_signup", :value => @social_signup}
+    %input{:type => "hidden", :name => "user[location]", :value => @user.location}
+    
+    - unless @invitation.blank?
+      %input{:type => "hidden", :name => "invitation_token", :value => @invitation.token}
+
+    %fieldset.ml25
+      = f.label(:username, "Username", :class => "login_label")
+      = f.text_field(:username, :autocomplete => :off, :id => "signupUsername", :placeholder => "username", :class => "mls ras toolTipSignup", :title => "", :tabindex => 1, "data-path" => username_availability_path)
+      %span.username-availability
+        / placeholder
+        
+    %fieldset.ml25
+      = f.label(:name, "Your Name (First & Last)", :class => "login_label")
+      = f.text_field(:name, :autocomplete => :off, :id => "signupName", :placeholder => "your name", :class => "mls ras toolTipSignup", :title => "We recommend using your real name so people you know can find you.", :tabindex => 2)
+  
+    %fieldset.ml25
+      = f.label(:email, "E-mail", :class => "login_label")
+      = f.text_field(:email, :autocomplete => :off, :id => "signupEmail", :placeholder => "email address", :class => "mls ras toolTipSignup", :title => "We will not share your e-mail address with ANYONE. Period.", :tabindex => 3)
+  
+    %fieldset.ml25
+      = f.label(:password, "Password", :class => "login_label")
+      = f.password_field(:password, :autocomplete => :off, :id => "signupPassword", :placeholder => "password", :class => "mls ras toolTipSignup", :title => "Passwords should be longer than 6 characters.", :tabindex => 4)
+  
+    %fieldset
+      = f.label(:birthday, "Date of Birth (age verification only)", :class => "ml30 login_label")
+      .dateOfBirth.mlxl
+        %select#signupBirthdayMonth.birthday_month.ras{:name => "user[birthday(2i)]", :tabindex => 5}
+          %option#signupChooseMonth{:value => ""} Month:
+          = options_for_select((1..12).map {|m| [Date::MONTHNAMES[m], m]})
+        %select#signupBirthdayDay.birthday_day.ras{:name => "user[birthday(3i)]", :tabindex => 6}
+          %option#signupChooseDay{:value => ""} Day:
+          = options_for_select((1..31))
+        %select#signupBirthdayYear.birthday_year.ras{:name => "user[birthday(1i)]", :tabindex => 7}
+          %option#signupChooseYear{:value => ""} Year:
+          = options_for_select((1901..Date.today.year).to_a.reverse)
+          
+    .tcenter
+      %fieldset.mtm
+        %label{:for => "Agree"}
+          %h4.light
+            By clicking Sign up, you are indicating that you have read and agree to the
+            %a.inlinelink.light{:href => "/tos"}
+              terms of service
+      
+      %fieldset.signupbutton
+        = image_tag("ajax_white.gif", :size => "16x16", :class => "soft_hidden signup_ajax_animation")
+        %input.ram.green.signup.button{:name => "signup", :type => "submit", :value => "Sign up", :tabindex => 8}
+        
+- unless @user.birthday.blank?
+  - begin
+    - parsed_bday = Date.parse @user.birthday.to_s
+
+    :javascript
+      $('#signupBirthdayMonth').val(#{parsed_bday.month});
+      $('#signupBirthdayDay').val(#{parsed_bday.day});
+      $('#signupBirthdayYear').val(#{parsed_bday.year});
+  - rescue

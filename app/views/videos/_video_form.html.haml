@@ -1,0 +1,80 @@
+.channel
+  %h3 Which channel should it go in?
+  .channel-select-elements
+    %select#select-a-channel-via-upload.medium{:name => "channel_id"}
+      - current_user.channels.each do |c|
+        %option{:value => "#{c.id}"} #{c.title}
+      %option.dash-divider{:value => "divider", :disabled => "disabled"} -----------------
+      %option{:value => "add_to_new_channel"} Add to new channel
+
+    .add-to-new-channel-via-upload-area 
+      = image_tag("right_arrow_icon.png", :alt => "", :size => "25x25")
+      = text_field_tag(:channel_name, nil, :placeholder => "Name your new channel")
+      %label
+        %input{:type => "checkbox", :name => "channel_is_private", :value => "true"}
+        %span Private?
+    
+    :javascript
+      // Check if we are adding a new channel
+      $('#select-a-channel-via-upload').live('change', function () {
+        var selected_val = $('#select-a-channel-via-upload option:selected').val();
+    
+        if (selected_val == "add_to_new_channel") {
+          $('.add-to-new-channel-via-upload-area').css('display', 'inline');
+        } else {
+          $('.add-to-new-channel-via-upload-area').fadeOut('fast');
+        }
+      });
+  
+    - # Set the video channel value if need be
+    - if defined?(@video)
+      :javascript
+        $('#select-a-channel-via-upload').val('#{@video.channel.id}');
+
+.title
+  %h3 Title it
+  = text_field(:video, :title, :maxlength => "75", :placeholder => "Give your video a title")
+    
+  %span.chars-remaining 75 characters left
+  
+.description
+  %h3 Describe it (optional)
+  = text_area(:video, :description, :maxlength => "1000", :size => "40x5", :placeholder => "(Optional) Describe your video here so everyone knows what it is about")
+  
+  %span.chars-remaining 1000 characters left
+  
+.tags
+  %h3 Organize it with Tags (separated by commas)
+  
+  - # show current tags if we're editing
+  - unless uploading_a_video
+    - tags ||= @video.tags
+    - unless tags.blank?
+      .tags-area
+        %ul
+          - tags.each do |t|
+            %li
+              = link_to(t.content, video_search_path(:tag => t.content))
+              = link_to("x", user_video_tag_path(get_object_owner(@video), @video, t), :class => "tooltip remove-tag",
+                :method => "DELETE", :remote => true, :title => "Remove tag", "data-video-id" => "#{@video.id}")
+                  
+  %textarea{:name => "video_tags", :placeholder => "please, separate, all, of, your, tags, with, commas"}
+
+
+- if uploading_a_video
+  .social-options
+    %span
+      = check_box("video", "send_to_facebook", { :disabled => @facebook_connected.blank? }, true, false)
+      Post this video to Facebook
+    %span
+      = check_box("video", "send_to_twitter", { :disabled => @twitter_connected.blank? }, true, false)
+      Post this video to Twitter
+    
+.buttons-area    
+  = submit_tag("Save Video", :class => "medium primary btn" )
+  
+- # Tell them about social options
+- if uploading_a_video
+  - if @facebook_connected.blank? or @twitter_connected.blank?
+    You can post your videos to your Facebook or Twitter account by connecting those accounts to Brevidy
+    within your #{link_to("Account Settings", user_account_path(current_user))} page.

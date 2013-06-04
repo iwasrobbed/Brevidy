@@ -1,0 +1,38 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+
+  - # Main (White) Content Wrapper
+  .content-wrapper
+  
+    .video-meta-area
+    
+      %h3.video-meta-title Edit this video
+        
+      = form_tag(user_video_path(get_object_owner(@video), @video, :redirect => true), :id => "update-video-form", :method => "PUT", :remote => true) do
+      
+        - # Show the thumbnail selection area if the video is done processing and if it isn't a remote video (youtube or vimeo)
+        - if @video.is_status?(VideoGraph::READY) && @video.remote_video_id.blank?
+          .choose-a-thumbnail
+            %h3 Choose a Thumbnail
+            %input{:name => "video[selected_thumbnail]", :class => "selected-thumbnail", :value => @video.selected_thumbnail, :type => "hidden"}
+            %ul
+              - for thumb_number in (0..3)
+                - is_selected = (@video.selected_thumbnail == thumb_number)
+                %li{"data-thumb-number" => "#{thumb_number}", :class => is_selected ? "selected-thumbnail" : ""}
+                  = image_tag(@video.get_thumbnail_url(thumb_number), :size => "180x96", :alt => "Choose a thumbnail")
+                      
+        - # Show a static thumbnail for a remote, ready video
+        - if @video.is_status?(VideoGraph::READY) && !@video.remote_video_id.blank?
+          .static-thumbnail
+            %h3 Thumbnail
+            %ul
+              %li
+                = image_tag(@video.get_thumbnail_url(@video.selected_thumbnail), :size => "180x96", :alt => "Thumbnail")
+        
+      
+        = render :partial => 'videos/video_form', :locals => {:uploading_a_video => false}
+        
+      :javascript
+        $('#update-video-form').live('ajax:error', function(data, xhr, response){
+          brevidy.handle_ajax_error("video", xhr);
+        });

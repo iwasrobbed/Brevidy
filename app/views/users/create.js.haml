@@ -1,0 +1,5 @@
+- if @user.errors.any?
+  :plain
+    $('.formErrorField.js-validate').slideUp("fast", function () { 
+      $(this).html('#{escape_javascript(render('shared/error_messages', :klass => @user))}').slideDown('fast'); 
+    });

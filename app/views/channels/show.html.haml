@@ -1,0 +1,53 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'shared/content_titles'
+  
+    .info-message.mhl.clearfix.channel-show-info
+      %span.pull-left
+        Now viewing: #{@channel.title}
+      
+      .pull-right 
+        - if current_user_owns?(@channel)
+          = link_to(edit_user_channel_path(@user, @channel), :class => "small btn") do
+            = image_tag("edit_icon.png", :size => "11x11")
+            Manage Channel
+          
+        - else
+          - if current_user.blank?
+            = link_to("Login to Subscribe", root_path, :class => "btn small")
+          - else
+            - if current_user.is_subscribed_to?(@channel)
+              = render :partial => "channels/button_unsubscribe", :locals => { :user => @user, :channel => @channel, :button_size => 'small' }
+            - else
+              - if @channel.private?
+                = render :partial => "channels/button_subscribe", :locals => { :user => @user, :channel => @channel, :is_private => true, :button_size => 'small' }
+              - else
+                = render :partial => "channels/button_subscribe", :locals => { :user => @user, :channel => @channel, :is_private => false, :button_size => 'small' }
+        
+      .clear
+        - if current_user_owns?(@channel) and @channel.private?
+          = render :partial => "private_channel_link", :locals => { :channel => @channel, :with_margin => true }
+    
+
+      - if @viewing_via_token_access
+        %input{:name => "channel_access_token", :type => "hidden", :value => "#{@channel.public_token}"}/
+      
+    - if @videos.blank?
+      .info-message.mhl
+        There are no videos in this channel to show.
+    - else        
+      = render @videos
+    
+      = will_paginate @videos
+    
+      = render :partial => "shared/infinite_scrolling", :locals => { :item_selector => ".video-post" }

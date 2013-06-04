@@ -1,0 +1,4 @@
+- @user_events.each do |user_event|
+  - unless user_event.blank?
+    - # Render the content based on event type (badge, comment, etc)
+    = render_content_for_event(user_event)

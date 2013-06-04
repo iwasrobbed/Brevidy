@@ -1,0 +1,45 @@
+#brevidy-modal.modal.hide
+  = form_tag(user_create_shared_video_path(current_user), :id => "share-a-link-form", :method => "POST", :remote => true) do
+    .modal-header
+      %h3 Share a Link
+    .modal-body
+      %p.link-title 
+        %strong Paste a YouTube or Vimeo link to share
+      = text_field_tag(:shared_video_link, nil, :placeholder => "http://www.youtube.com/watch?v=0FwOtHso5Wg")
+      
+      %p.channel-title 
+        %strong Choose a channel to share it into
+      
+      .channel-select-elements
+        %select#select-a-channel-via-share.medium{:name => "channel_id"}
+          - current_user.channels.each do |c|
+            %option{:value => "#{c.id}"} #{c.title}
+          %option.dash-divider{:value => "divider", :disabled => "disabled"} -----------------
+          %option{:value => "add_to_new_channel"} Add to new channel
+
+        .add-to-new-channel-area
+          = image_tag("right_arrow_icon.png", :alt => "", :size => "25x25")
+          = text_field_tag(:channel_name, nil, :placeholder => "Name your new channel")
+          %label
+            %input{:type => "checkbox", :name => "channel_is_private", :value => "true"}
+            %span Private?
+    
+        :javascript
+          // Check if we are adding a new channel
+          $('#select-a-channel-via-share').live('change', function () {
+            var selected_val = $('#select-a-channel-via-share option:selected').val();
+    
+            if (selected_val == "add_to_new_channel") {
+              $('.add-to-new-channel-area').css('display', 'inline');
+            } else {
+              $('.add-to-new-channel-area').fadeOut('fast');
+            }
+          });
+
+    .modal-footer
+      .ajax-errors
+        - # placeholder for ajax errors to be shown
+        
+      = submit_tag("Share", :id => "share-a-link", :class => "modal-confirm-btn btn primary")
+      %a.modal-cancel-btn.btn.secondary{:href => "#"} Cancel
+      = image_tag("ajax.gif", :class=>"ajax-animation", :size => "16x16")

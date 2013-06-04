@@ -1,0 +1,39 @@
+:plain
+  // Setup a custom template to use
+  var html_template = '#{escape_javascript(render(:partial => 'videos/flag_video_dialog.html'))}';
+
+  // Show the custom dialog
+  brevidy.custom_dialog(html_template);
+  
+  // Bind the ajax animation
+  $(document).bind('ajaxStart', function(e, request, options) {
+    $('#flag-video-form .ajax-animation').show();
+    $('#flag-video-form .ajax-errors').fadeOut("fast");
+  });
+  $(document).bind('ajaxComplete', function(e, request, options) {
+    $('#flag-video-form .ajax-animation').hide();
+  });
+  
+  // Handle success message and removal of dialog
+  $('#flag-video-form').live('ajax:success', function(data, json, response) {
+    $('.modal-header h3').text('Thank you');
+    $('.flagging-area, .modal-footer .btn').fadeOut('fast', function() {
+      $('.flagging-area').html('<h4 style="text-align: center">We will look into this and determine the best course of action.</h3>').fadeIn('fast');
+      setTimeout(function() { $('#brevidy-modal').modal('hide').remove(); }, 3000)
+    });
+  });
+  
+  // Description: Handles AJAX error
+  $('#flag-video-form').live('ajax:error', function(data, xhr, response) {
+    // get error message
+    var responseText = jQuery.parseJSON(xhr.responseText);
+    if (responseText !== null) { var responseMsg = responseText.error; }
+    if (typeof responseMsg == 'undefined') { responseMsg = 'There was an unknown error or the request timed out.  Please try again later'; }
+    
+    // set message
+    $('#flag-video-form .ajax-errors').fadeOut("fast", function() {
+      $(this).text(responseMsg).fadeIn('fast');
+    });
+    
+    return false;
+  });

@@ -1,0 +1,21 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+
+  - # Main (White) Content Wrapper
+  .content-wrapper.standard-padding
+    .info-message.mtl
+      %h3 Error: Your account has been deactivated
+      
+      %p
+        We're sorry, but your account has been deactivated and is currently under review, possibly due to a 
+        = link_to("Terms of Service", tos_path) 
+        violation.  
+        Typically we send an e-mail to your current e-mail address when we deactivate an account so please check your 
+        inbox and junk-mail folders for that e-mail and more information.
+        %br
+        %br
+        If you feel this has been done in error or you have a question about this, please contact
+        #{mail_to "support@brevidy.com", "Support", :encode => "hex", :subject => "Account Deactivation"}
+
+    .okayguy
+      = image_tag("okayguy.png", :alt => "Okay", :size => "256x275")

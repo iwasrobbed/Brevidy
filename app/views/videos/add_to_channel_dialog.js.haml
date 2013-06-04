@@ -1,0 +1,39 @@
+:plain  
+  // Setup a custom template to use
+  var html_template = '#{escape_javascript(render(:partial => 'videos/add_to_channel_dialog.html', :locals => { :video => @video }))}';
+
+  // Show the custom dialog
+  brevidy.custom_dialog(html_template);
+  
+  // Bind the ajax animation
+  $(document).bind('ajaxStart', function(e, request, options) {
+    $('#add-to-channel-form .ajax-animation').show();
+    $('#add-to-channel-form .ajax-errors').fadeOut("fast");
+  });
+  $(document).bind('ajaxComplete', function(e, request, options) {
+    $('#add-to-channel-form .ajax-animation').hide();
+  });
+  
+  // Handle success message and removal of dialog
+  $('#add-to-channel-form').live('ajax:success', function(data, json, response) {
+    $('.modal-header h3').text('Yay!');
+    $('.video-preview-area, .channel-selection-area, .modal-footer .btn').fadeOut('fast', function() {
+      $('.video-preview-area').html('<h3 style="text-align: center">Video was successfully shared!</h3>').fadeIn('fast');
+      setTimeout(function() { $('#brevidy-modal').modal('hide').remove(); }, 1500)
+    });
+  });
+  
+  // Description: Handles AJAX error
+  $('#add-to-channel-form').live('ajax:error', function(data, xhr, response) {
+    // get error message
+    var responseText = jQuery.parseJSON(xhr.responseText);
+    if (responseText !== null) { var responseMsg = responseText.error; }
+    if (typeof responseMsg == 'undefined') { responseMsg = 'There was an unknown error or the request timed out.  Please try again later'; }
+    
+    // set message
+    $('#add-to-channel-form .ajax-errors').fadeOut("fast", function() {
+      $(this).text(responseMsg).fadeIn('fast');
+    });
+    
+    return false;
+  });

@@ -1,0 +1,12 @@
+%li.zebra-striped
+  = link_to(user_path(subscriber), :class => "user-image") do
+    = image_tag("#{subscriber.image.blank? ? 'default_user_50px.jpg' : subscriber.image_url(:medium_profile) }", 
+      :alt => "#{subscriber.name}",
+      :size => "50x50")
+  
+  .user-meta
+    = link_to(subscriber.name, user_path(subscriber))
+    
+    .buttons
+      = link_to("Remove", user_channel_remove_subscriber_path(@user, @channel, :user_id => subscriber.id), :class => "small btn remove-subscriber")
+      = link_to("Block", user_block_path(subscriber), :class => "block-user small btn")

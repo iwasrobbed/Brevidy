@@ -1,0 +1,19 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'shared/content_titles'
+    
+    - unless flash.empty?
+      = compact_flash_messages
+      %div.mhl.mtm{:class => "access-request-msg #{@flash_key}-message"}
+        %h4
+          = @flash_msg
+    

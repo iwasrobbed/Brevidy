@@ -1,0 +1,22 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+  
+    .search-area
+      .info-message
+        - if @term.blank?
+          Looking for something interesting?  Try using the search box at the top of the page.
+        - else
+          Found #{pluralize(@results_count, @search_type)} for "#{@term}"
+          
+    - if @results.blank?
+      .okayguy
+        = image_tag("okayguy.png", :alt => "Okay", :size => "256x275")
+    - else
+      = render @results
+
+      = will_paginate @results
+  
+      = render :partial => "shared/infinite_scrolling", :locals => { :item_selector => ".video-post" }

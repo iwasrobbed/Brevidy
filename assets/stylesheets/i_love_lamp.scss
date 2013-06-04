@@ -1,0 +1,27 @@
+@charset "UTF-8";
+/*!
+ *
+ * Portions of this file were adapted from Bootstrap v1.4.0, Copyright 2012 Twitter, Inc
+ *
+ * Copyright 2012 Brevidy LLC
+ *
+ */
+
+// CSS Reset
+@import "reset.scss";
+
+// Foundation
+@import "foundation.scss";
+
+// Core
+@import "variables.scss";
+@import "mixins.scss";
+
+// Grid system and page structure
+@import "scaffolding.scss";
+
+// Styled patterns and elements
+@import "type.scss";
+@import "forms.scss";
+@import "tables.scss";
+@import "patterns.scss";

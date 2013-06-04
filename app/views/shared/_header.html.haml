@@ -1,0 +1,54 @@
+.topbar
+  .topbar-inner
+    .container
+      .static-links
+        = link_to(image_tag("brevidy_rgb_white.png", :size => "135x35", :alt => "Brevidy - The Soul of Video"), signed_in? ? user_stream_path(current_user) : :root, :class => "brand")
+    
+        %form.pull-left{:action => video_search_path, :method => "get"}
+          %input{:name => "q", :placeholder => "Search public videos", :type => "text"}/
+          %span.search
+            %button{:type => "submit", :value => "Go"}
+        
+        - if signed_in?
+          %ul.nav
+            %li
+              = link_to("Explore", explore_path)
+            %li
+              = link_to("Upload", new_user_video_path(current_user))
+            %li
+              = link_to("Share a Link", user_share_dialog_path(current_user), :remote => true, "data-method" => "GET")
+            %li
+              = link_to("Invite", user_invitations_path(current_user))
+      
+      .dynamic-links
+        - if signed_in?
+          %ul.nav.secondary-nav
+            %li.dropdown{"data-dropdown" => "dropdown"}
+              = link_to(user_path(current_user), :class => "dropdown-toggle") do
+                %span#user-image
+                  = image_tag("#{current_user.image.blank? ? 'default_user_35px.jpg' : current_user.image_url(:small_profile) }", :alt => "#{current_user.name}", :size => "35x35")
+                %span#username
+                  = current_user.username
+              %ul.dropdown-menu
+                %li
+                  = link_to("My Channels", user_channels_path(current_user))
+                %li
+                  = link_to("Account Settings", user_account_path(current_user))
+                %li
+                  = link_to("Find People", find_people_path)
+                %li
+                  = link_to("Help", "http://getsatisfaction.com/brevidy", :target => "_blank")
+                %li.divider
+                %li
+                  = link_to("Logout", logout_path, :remote => true, "data-method" => "DELETE")
+        - else
+          %ul.nav.secondary-nav
+            %li
+              = link_to("Explore", explore_path)
+            %li.vertical-divider 
+            %li
+              = link_to("Sign up", signup_path)
+            %li.vertical-divider
+            %li
+              = link_to("Login", login_path)
+            

@@ -1,0 +1,3 @@
+%a{:href => "mailto:?body=#{public_channel_url(:public_token => channel.public_token)}&subject=#{channel.title}"}
+  Want to share this private channel?  You can give your friends or family this link:
+%p{:class => defined?(with_margin) ? "mhxl" : ""}=public_channel_url(:public_token => channel.public_token)

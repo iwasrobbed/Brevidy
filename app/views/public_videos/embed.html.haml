@@ -1,0 +1,27 @@
+- # Checks if the video is a YouTube/Vimeo player
+- video_is_not_remote ||= @video.remote_video_id.blank?
+%div{:id => "videoPlayerContainer#{@video.id}"}
+  - if video_is_not_remote
+    :javascript
+      jwplayer("videoPlayerContainer#{@video.id}").setup({
+        aboutlink: "http://www.brevidy.com",
+        abouttext: "Brevidy",
+        allowfullscreen: true,
+        autostart: false,
+        controlbar: "over",
+        flashplayer: "#{javascript_path('player/player.swf')}",
+        file: "#{@video.generate_secure_cf_url}",
+        height: "100%",
+        image: "#{@video.get_thumbnail_url(@video.selected_thumbnail)}",
+        screencolor: '#000000',
+        skin: "#{javascript_path('player/skins/beelden.zip')}",
+        stretching: "uniform",
+        volume: 100,
+        width: "100%",
+        wmode: "opaque"
+      });
+
+  - else
+    - # Video is remote (YouTube, Vimeo, etc.) so let's embed it
+    :plain
+      #{@video.get_html5_iframe_code(page_type = "embed")}

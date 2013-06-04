@@ -1,0 +1,5 @@
+.featured-video-object{"data-video-id" => featured_video.id}
+  = link_to(user_video_path(get_object_owner(featured_video), featured_video)) do
+    = image_tag(featured_video.get_thumbnail_url(featured_video.selected_thumbnail), :size => "190x102", :alt => featured_video.title, :class => "featured-popover", :title => featured_video.title, "data-content" => featured_video.description.blank? ? "No description given" : truncate(featured_video.description, :length => 150))
+    %i.play-icon
+      = image_tag("play_small.png", :alt => "Play", :size => "45x34")

@@ -1,0 +1,43 @@
+.content-titles
+  - viewing_someone_else = (current_user.blank? || !current_user?(@user))
+
+  %ul
+    - unless viewing_someone_else
+      %li
+        = link_to("Stream", user_stream_path(@user), :class => "lighten-to-blue")
+  
+    - unless viewing_someone_else
+      %li.latest-activity
+        - unseen_notifications_count ||= @user.notifications_count
+        - if unseen_notifications_count != 0
+          %span.notifications-dot><
+            #{unseen_notifications_count > 100 ? "100+" : unseen_notifications_count}
+            
+        = link_to("Latest Activity", user_latest_activity_path(@user), :class => "lighten-to-blue")
+        
+        
+    
+    %li.dropdown{"data-dropdown" => "dropdown"}
+      = link_to(viewing_someone_else ? "Channels" : "My Channels", user_channels_path(@user), :class => "dropdown-toggle lighten-to-blue")
+      %ul.dropdown-menu
+        - @user.channels.limit(5).each do |c|
+          %li
+            = link_to(user_channel_path(@user, c)) do
+              - if c.featured?
+                = image_tag("featured_star.png", :alt => "Featured Channel", :size => "13x13")
+              - elsif c.private?
+                = image_tag("private_small.png", :alt => "Private Channel", :size => "13x13")
+              - else
+                = image_tag("public.png", :alt => "Public Channel", :size => "13x13")
+              
+              = c.title
+            
+        %li.divider
+        %li.view-all-channels
+          = link_to("View All (#{@user.channels.count}) Channels", user_channels_path(@user))
+
+    %li
+      = link_to(viewing_someone_else ? "Videos" : "My Videos", user_path(@user), :class => "lighten-to-blue")
+
+    %li
+      = link_to("About", user_about_path(@user), :class => "lighten-to-blue")

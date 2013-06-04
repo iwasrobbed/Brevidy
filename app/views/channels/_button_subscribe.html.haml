@@ -1,0 +1,2 @@
+- link_text = is_private ? "Request Access" : "Subscribe"
+= link_to(link_text, user_channel_subscribe_path(get_object_owner(channel), channel, :ref => button_size), :class => "subscribe btn #{button_size}", :remote => true, :method => "POST")

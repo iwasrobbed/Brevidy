@@ -1,0 +1,18 @@
+- if all_badge_types.include?(give_badges.id)
+  - # this video has been given a certain badge, see if it's the
+  - # current user that gave it
+  - if video.has_been_badged_with?(give_badges, current_user)
+    - badge ||= find_badge_for_video(give_badges, video)
+    = render :partial => 'badges/unbadge.html', :locals => { :badge => badge,
+                                                             :video => video,
+                                                             :video_owner => video_owner,
+                                                             :icon => give_badges }
+  - else
+    = render :partial => 'badges/give_a_badge.html', :locals => { :video => video,
+                                                                  :video_owner => video_owner,
+                                                                  :icon => give_badges }
+    
+- else
+  = render :partial => 'badges/give_a_badge.html', :locals => { :video => video,
+                                                                :video_owner => video_owner,
+                                                                :icon => give_badges }

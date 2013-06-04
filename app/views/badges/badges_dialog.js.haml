@@ -1,0 +1,2 @@
+:plain
+  brevidy.dialog("Viewing all badges", "<ul class='viewing-all-badges'>#{escape_javascript(render(:partial => 'badges/badge_activity.html', :collection => @badges, :locals => { :user => @user }))}</ul>", "message");

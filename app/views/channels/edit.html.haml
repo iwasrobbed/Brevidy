@@ -1,0 +1,82 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'shared/content_titles'
+    
+    .edit-channel-area
+      - unless @channel.featured?
+        %label{:for => "channel_title"} Name:
+        .channel-name
+          = form_tag(user_channel_path(@user, @channel), :id => "update-channel-name", :method => "PUT", :remote => true) do
+            %input{:name => "title", :type => "text", :maxlength => "30", :placeholder => "Give the channel a name", :value => @channel.title}
+            = submit_tag("Update", :class => "medium btn")
+          = image_tag("ajax.gif", :class => "ajax-animation", :size => "16x16")
+          = image_tag("green_checkmark.png", :class => "green-checkmark", :size => "16x16")
+
+
+        .channel-privacy 
+          %label Channel is Private?
+          .toggles
+            = link_to(@channel.private? ? "Yes" : "No", user_channel_path(@user, @channel, :privacy => @channel.private? ? "false" : "true"), :id => "toggle-channel-privacy", :remote => true, :method => "PUT", :class => "medium btn #{@channel.private? ? 'success' : ''}")
+          
+          .informational-msg 
+            %p
+              %span 
+                %strong *
+              Making a channel private means that you must approve of everyone who wants to subscribe to this channel before
+              they can view any videos in it.
+              
+          .info-message.centered.private-channel-link{:style => @channel.private? ? "" : "display:none"}
+            = render :partial => "private_channel_link", :locals => { :channel => @channel }
+             
+             
+          .delete-channel-area
+            %label Delete Channel
+            %span
+              %a.show-delete-area{:href => "#"} Are you sure?
+            .alert-message.block-message.error
+              %p
+                %strong Warning...
+                Deleting this channel will remove:
+              %ul
+                %li All videos in the channel 
+                %li All people who are currently subscribed to or collaborating on the channel
+                %li All comments and badges associated with the videos in the channel
+              .alert-actions
+                = link_to("I understand the consequences", user_channel_path, :class => "medium btn delete-channel")
+              
+      .collaboration
+        %label Manage Subscribers
+        
+        -#.informational-msg 
+        -#  %p
+        -#    %span 
+        -#      %strong *
+        -#    Making someone a collaborator will allow them to publish videos to this channel which will then be viewable by
+        -#    anyone who is subscribed to this channel.
+        -#    %strong Note:
+        -#    If you want to make someone a collaborator, they MUST be subscribed to this channel before you can do so.
+        
+        - if @subscribers.blank?
+          .info-message
+            No one is currently subscribed to this channel.
+            
+        - else
+          %ul.subscriber-listing
+            = render :partial => 'subscriber', :collection => @subscribers
+        
+          = will_paginate @subscribers
+    
+          = render :partial => "shared/infinite_scrolling", :locals => { :item_selector => ".zebra-striped" }
+      
+- # Tell the page to scroll down to the content wrapper upon page load
+= render 'shared/scroll_to_content_wrapper'

@@ -1,0 +1,24 @@
+#brevidy-modal.modal.hide
+  = form_tag(user_video_flag_path(@user, @video), :id => "flag-video-form", :method => "POST", :remote => true) do
+    .modal-header
+      %h3 Report an error or a concern you may have
+    .modal-body
+      .flagging-area
+        %ul
+          - Video.get_all_flags.each do |f|
+            %li
+              %input{:name => "flag_id", :type => "radio", :value => "#{f.id}"}/
+              = f.reason
+    
+          %li
+            %label
+              Provide more details (optional):
+            = text_area_tag(:detailed_reason, nil, :placeholder => "Optional")
+
+    .modal-footer
+      .ajax-errors
+        - # placeholder for ajax errors to be shown
+      
+      = submit_tag("Flag Video", :id => "flag-video", :class => "modal-confirm-btn btn primary")
+      %a.modal-cancel-btn.btn.secondary{:href => "#"} Cancel
+      = image_tag("ajax.gif", :class=>"ajax-animation", :size => "16x16")

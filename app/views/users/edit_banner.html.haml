@@ -1,0 +1,53 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper.standard-padding
+
+    - # Set up the tabs
+    %ul.tabs
+      %li.active
+        %a{:href => "#upload-image"} Upload a Banner
+      %li
+        %a{:href => "#choose-from-gallery"} Choose one from the Gallery
+        
+        
+    - # Set up the content areas for the tabs
+    .pill-content
+      #upload-image.active
+        .info-message
+          %strong Note: 
+          Maximum file size of 5 MB.  Please keep it clean and only upload your own images.
+          
+        #progress-bar
+          .progress{:style => "width: 0%;"}
+            %span{:style => "display:none;"}
+              Uploading
+  
+        :plain      
+          #{s3_uploader('banner')}
+        %a{:id => "select-banner", :href => "#", :class => "medium primary btn"} Select Image
+        
+      #choose-from-gallery
+        .info-message
+          %strong Note: 
+          The images shown below are protected by copyright laws and are made available to Brevidy by Rob Phillips and 
+          = succeed "." do
+            = link_to "Court Whelan", "http://cwhelanphotography.com", :target => "_blank"
+          You may
+          %strong
+            only
+          use them on Brevidy or within screenshots of Brevidy.
+        
+        .banner-area
+          - @banner_images.each do |b|
+            = link_to(image_tag("banners/small/#{b.filename}", :size => "250x93"), user_update_banner_from_gallery_path(current_user, :banner_image_id => b.id), :class => "set-new-banner-image thumbnail", :remote => true, :method => :put)
+
+- # Tell the page to scroll down to the content wrapper upon page load
+= render 'shared/scroll_to_content_wrapper'

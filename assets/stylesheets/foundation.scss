@@ -1,0 +1,110 @@
+/* foundation.scss
+ * Foundational elements and styles
+ * ------------------------------------------------------------------ */
+
+.centered {
+  text-align: center;
+}
+
+// BADGES
+// ------
+
+.badgeBeautiful, .badgeClever, .badgeCreative, .badgeCreepy, .badgeCute, .badgeDislikeIt, .badgeEpic, .badgeEvil, .badgeFail, .badgeGifted, .badgeHilarious, .badgeHot, .badgeHuh, .badgeInspirational, .badgeLikeIt, .badgeLoveIt, .badgeNaughty, .badgeOriginal, .badgeSad, .badgeScary, .badgeTrendy, .badgeWise, .badgeWow, .badgeYummy {
+	background-image: url("sprite_badges-1.0.0.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  display: block;
+  margin: 2px 0px 3px 8px;
+  height: 25px;
+  width: 25px;
+}
+
+.badgeBeautiful_Large, .badgeClever_Large, .badgeCreative_Large, .badgeCreepy_Large, .badgeCute_Large, .badgeDislikeIt_Large, .badgeEpic_Large, .badgeEvil_Large, .badgeFail_Large, .badgeGifted_Large, .badgeHilarious_Large, .badgeHot_Large, .badgeHuh_Large, .badgeInspirational_Large, .badgeLikeIt_Large, .badgeLoveIt_Large, .badgeNaughty_Large, .badgeOriginal_Large, .badgeSad_Large, .badgeScary_Large, .badgeTrendy_Large, .badgeWise_Large, .badgeWow_Large, .badgeYummy_Large {
+	background-image: url("sprite_badges-1.0.0.png");
+  background-repeat: no-repeat;
+  background-position: 0 -35px;
+  display: inline-block;
+  float: left;
+  margin: 0px 3px;
+  height: 40px;
+  width: 40px;
+}
+
+.badgeBeautiful_Preview, .badgeClever_Preview, .badgeCreative_Preview, .badgeCreepy_Preview, .badgeCute_Preview, .badgeDislikeIt_Preview, .badgeEpic_Preview, .badgeEvil_Preview, .badgeFail_Preview, .badgeGifted_Preview, .badgeHilarious_Preview, .badgeHot_Preview, .badgeHuh_Preview, .badgeInspirational_Preview, .badgeLikeIt_Preview, .badgeLoveIt_Preview, .badgeNaughty_Preview, .badgeOriginal_Preview, .badgeSad_Preview, .badgeScary_Preview, .badgeTrendy_Preview, .badgeWise_Preview, .badgeWow_Preview, .badgeYummy_Preview {
+	background-image: url("sprite_badges-1.0.0.png");
+  background-repeat: no-repeat;
+  background-position: 0 -85px;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+}
+
+.badgeClever{ background-position: 0 -145px; width: 25px; height: 25px; } 
+.badgeClever_Large{ background-position: 0 -180px; width: 40px; height: 40px; } 
+.badgeClever_Preview{ background-position: 0 -230px; width: 50px; height: 50px; } 
+.badgeCreative{ background-position: 0 -290px; width: 25px; height: 25px; } 
+.badgeCreative_Large{ background-position: 0 -325px; width: 40px; height: 40px; } 
+.badgeCreative_Preview{ background-position: 0 -375px; width: 50px; height: 50px; } 
+.badgeCreepy{ background-position: 0 -435px; width: 25px; height: 25px; } 
+.badgeCreepy_Large{ background-position: 0 -470px; width: 40px; height: 40px; } 
+.badgeCreepy_Preview{ background-position: 0 -520px; width: 50px; height: 50px; } 
+.badgeCute{ background-position: 0 -580px; width: 25px; height: 25px; } 
+.badgeCute_Large{ background-position: 0 -615px; width: 40px; height: 40px; } 
+.badgeCute_Preview{ background-position: 0 -665px; width: 50px; height: 50px; } 
+.badgeDislikeIt{ background-position: 0 -725px; width: 25px; height: 25px; } 
+.badgeDislikeIt_Large{ background-position: 0 -760px; width: 40px; height: 40px; } 
+.badgeDislikeIt_Preview{ background-position: 0 -810px; width: 50px; height: 50px; } 
+.badgeEpic{ background-position: 0 -870px; width: 25px; height: 25px; } 
+.badgeEpic_Large{ background-position: 0 -905px; width: 40px; height: 40px; } 
+.badgeEpic_Preview{ background-position: 0 -955px; width: 50px; height: 50px; } 
+.badgeEvil{ background-position: 0 -1015px; width: 25px; height: 25px; } 
+.badgeEvil_Large{ background-position: 0 -1050px; width: 40px; height: 40px; } 
+.badgeEvil_Preview{ background-position: 0 -1100px; width: 50px; height: 50px; } 
+.badgeFail{ background-position: 0 -1160px; width: 25px; height: 25px; } 
+.badgeFail_Large{ background-position: 0 -1195px; width: 40px; height: 40px; } 
+.badgeFail_Preview{ background-position: 0 -1245px; width: 50px; height: 50px; } 
+.badgeGifted{ background-position: 0 -1305px; width: 25px; height: 25px; } 
+.badgeGifted_Large{ background-position: 0 -1340px; width: 40px; height: 40px; } 
+.badgeGifted_Preview{ background-position: 0 -1390px; width: 50px; height: 50px; } 
+.badgeHilarious{ background-position: 0 -1450px; width: 25px; height: 25px; } 
+.badgeHilarious_Large{ background-position: 0 -1485px; width: 40px; height: 40px; } 
+.badgeHilarious_Preview{ background-position: 0 -1535px; width: 50px; height: 50px; } 
+.badgeHot{ background-position: 0 -1595px; width: 25px; height: 25px; } 
+.badgeHot_Large{ background-position: 0 -1630px; width: 40px; height: 40px; } 
+.badgeHot_Preview{ background-position: 0 -1680px; width: 50px; height: 50px; } 
+.badgeHuh{ background-position: 0 -1740px; width: 25px; height: 25px; } 
+.badgeHuh_Large{ background-position: 0 -1775px; width: 40px; height: 40px; } 
+.badgeHuh_Preview{ background-position: 0 -1825px; width: 50px; height: 50px; } 
+.badgeInspirational{ background-position: 0 -1885px; width: 25px; height: 25px; } 
+.badgeInspirational_Large{ background-position: 0 -1920px; width: 40px; height: 40px; } 
+.badgeInspirational_Preview{ background-position: 0 -1970px; width: 50px; height: 50px; } 
+.badgeLikeIt{ background-position: -60px 0; width: 25px; height: 25px; } 
+.badgeLikeIt_Large{ background-position: -60px -35px; width: 40px; height: 40px; } 
+.badgeLikeIt_Preview{ background-position: -60px -85px; width: 50px; height: 50px; } 
+.badgeLoveIt{ background-position: -60px -145px; width: 25px; height: 25px; } 
+.badgeLoveIt_Large{ background-position: -60px -180px; width: 40px; height: 40px; } 
+.badgeLoveIt_Preview{ background-position: -60px -230px; width: 50px; height: 50px; } 
+.badgeNaughty{ background-position: -60px -290px; width: 25px; height: 25px; } 
+.badgeNaughty_Large{ background-position: -60px -325px; width: 40px; height: 40px; } 
+.badgeNaughty_Preview{ background-position: -60px -375px; width: 50px; height: 50px; } 
+.badgeOriginal{ background-position: -60px -435px; width: 25px; height: 25px; } 
+.badgeOriginal_Large{ background-position: -60px -470px; width: 40px; height: 40px; } 
+.badgeOriginal_Preview{ background-position: -60px -520px; width: 50px; height: 50px; } 
+.badgeSad{ background-position: -60px -580px; width: 25px; height: 25px; } 
+.badgeSad_Large{ background-position: -60px -615px; width: 40px; height: 40px; } 
+.badgeSad_Preview{ background-position: -60px -665px; width: 50px; height: 50px; } 
+.badgeScary{ background-position: -60px -725px; width: 25px; height: 25px; } 
+.badgeScary_Large{ background-position: -60px -760px; width: 40px; height: 40px; } 
+.badgeScary_Preview{ background-position: -60px -810px; width: 50px; height: 50px; } 
+.badgeTrendy{ background-position: -60px -870px; width: 25px; height: 25px; } 
+.badgeTrendy_Large{ background-position: -60px -905px; width: 40px; height: 40px; } 
+.badgeTrendy_Preview{ background-position: -60px -955px; width: 50px; height: 50px; } 
+.badgeWise{ background-position: -60px -1015px; width: 25px; height: 25px; } 
+.badgeWise_Large{ background-position: -60px -1050px; width: 40px; height: 40px; } 
+.badgeWise_Preview{ background-position: -60px -1100px; width: 50px; height: 50px; } 
+.badgeWow{ background-position: -60px -1160px; width: 25px; height: 25px; } 
+.badgeWow_Large{ background-position: -60px -1195px; width: 40px; height: 40px; } 
+.badgeWow_Preview{ background-position: -60px -1245px; width: 50px; height: 50px; } 
+.badgeYummy{ background-position: -60px -1305px; width: 25px; height: 25px; } 
+.badgeYummy_Large{ background-position: -60px -1340px; width: 40px; height: 40px; } 
+.badgeYummy_Preview{ background-position: -60px -1390px; width: 50px; height: 50px; } 

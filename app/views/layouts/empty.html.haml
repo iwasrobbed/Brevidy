@@ -1,0 +1,61 @@
+!!!
+%html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "chrome=1", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}
+    %meta{:content => "en", "http-equiv" => "Content-Language"}
+    %meta{:content => "noodp,noydir", :name => "robots"}/
+    %meta{:name => "description", :content => "Brevidy allows you to capture the fleeting moments of your life on video and share them with those around you."}/
+    %meta{:name => "keywords", :content => "brevidy,brevity,video,social,social network,networking,life,capture,camera,video camera,mobile camera,mobile,videography,people,connect,relationships"}/
+    %link{:rel => "image_src", :href => "#{image_path('meta_tag_logo.png')}"}/
+    
+    - # Facebook OpenGraph protocol for embedding our video link back to Brevidy
+    %meta{:property => "fb:app_id", :content => "178344348908217" }/
+    %meta{:property => "og:url", :content => public_video_url(:public_token => @video.public_token) }/
+    %meta{:property => "og:title", :content => @video.title }/
+    %meta{:property => "og:description", :content => @video.description }/
+    %meta{:property => "og:type", :content => "video" }/
+    %meta{:property => "og:image", :content => @video.get_thumbnail_url(@video.selected_thumbnail) }/
+    %meta{:property => "og:video", :content => public_video_url(:public_token => @video.public_token) }/
+    %meta{:property => "og:video:type", :content => "application/x-shockwave-flash" }/
+    %meta{:property => "og:video:width", :content => "398" }/
+    %meta{:property => "og:video:height", :content => "224" }/
+    %meta{:property => "og:site_name", :content => "Brevidy"}/
+      
+        
+    /
+      \.b.
+      \.b.                 .e.e.e.   .v       v.     .    .d.d.     .y.   .y.
+      \.b.b.b.    .r.r.r.  .e         .v     v.           .d.  .d      y y
+      \.b.   .b.  .r.      .e.e.e.     .v   v.      .i.   .d.   d      .y.
+      \.b.   .b   .r.      .e           .v v.       .i.   .d.  .d      .y.
+      \.b.b.b.    .r.      .e.e.e.       .v.        .i.   .d.d.        .y.
+      \
+      come help us create something amazing: jobs@brevidy.com
+      
+    %title
+      = browser_title
+      
+    :css
+      html, body {
+        line-height: 0px;
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+      body {
+        background-color: #000000;
+      }
+      
+    - # Site-wide JS
+    = javascript_include_tag "player/player.js"
+
+    - # Fav Icon and CSRF meta tag
+    = favicon_link_tag
+    = csrf_meta_tag
+  
+  %body
+  
+    = yield

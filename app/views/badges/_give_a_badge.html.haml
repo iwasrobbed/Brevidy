@@ -1,0 +1,8 @@
+- if signed_in?
+  = link_to(user_video_badges_path(video_owner, video), :class => "give-a-badge", 
+        "data-badge-type" => "#{icon.id}", "data-video-id" => "#{video.id}") do
+    %i{:title => "#{icon.name}", :class => "tooltip-with-icon #{icon.css_class}"}
+    
+- else
+  = link_to(login_path, :class => "show-msg-modal", "data-modal-title" => "Please login or sign up", "data-modal-message" => "You must <a href='#{login_path}'>Login</a> or <a href='#{signup_path}'>Sign up</a> before you can badge a video.") do
+    %i{:title => "#{icon.name}", :class => "tooltip-with-icon #{icon.css_class}"}

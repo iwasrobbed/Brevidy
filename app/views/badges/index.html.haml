@@ -1,0 +1,31 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'shared/content_titles'
+    
+    .info-message.mhl.centered
+      %h4 Badges Given to #{@user.name}
+  
+    .badges-grid
+      - @badges.each do |b|
+        .grid-item.thumbnail
+          %p 
+            %strong #{b[:name]}
+          %i{:class => "#{b[:css_class] + '_Preview'}"}
+          %p 
+            Received 
+            %br/
+            #{b[:count]}
+          
+          
+- # Tell the page to scroll down to the content wrapper upon page load
+= render 'shared/scroll_to_content_wrapper'

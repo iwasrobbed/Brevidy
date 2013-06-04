@@ -1,0 +1,16 @@
+requested access to your private channel, 
+%strong #{object.channel.title}
+%span.gray
+  #{time_ago_in_words(object.created_at)} ago
+        
+.approval-options
+  - if object.ignored?
+    You have ignored this request.  Would you like to 
+    = link_to("Approve", user_channel_request_access_path(current_user, object.channel, :approved => true, :token => object.token))
+    it, instead?
+  - else
+    Would you like to
+    = link_to("Approve", user_channel_request_access_path(current_user, object.channel, :approved => true, :token => object.token))
+    or
+    = link_to("Ignore", user_channel_request_access_path(current_user, object.channel, :ignored => true, :token => object.token))
+    this request?

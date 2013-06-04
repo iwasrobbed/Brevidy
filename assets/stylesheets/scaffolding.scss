@@ -1,0 +1,222 @@
+/*
+ * Scaffolding.scss
+ * Basic and global styles for generating a grid system, structural layout, and page templates
+ * ------------------------------------------------------------------------------------------- */
+
+
+// STRUCTURAL LAYOUT
+// -----------------
+
+body {
+  color: $grayDark;
+  margin: 0;
+  padding-top: 41px;
+  width: 100%;
+  @include sans-serif-font(normal,$basefont,$baseline);
+}
+
+// Container (centered, fixed-width layouts)
+.container {
+  @include fixed-container();
+  
+  .middle-container {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    position: relative;
+    text-align: center;
+    width: $siteInnerWidth;
+    
+    .banner-corners {
+      position: absolute;
+      left: 12px;
+      top: 483px;
+    }
+    .middle-user-banner-container {
+      @include vertical-gradient(#fffffe, #d6d6d6);
+      border: 1px solid $gray;
+      border-color: rgba(0, 0, 0, .5);
+      height: 170px;
+      min-height: 170px;
+      margin-top: -10px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      text-align: left;
+      width: 875px;
+      z-index: 500;
+      $shadow: #292929 0px 1px 10px;
+      @include box-shadow($shadow);
+    }
+    
+    .lower-wrapper {
+      background-color: #202020;
+      background-color: rgba(32, 32, 32, 1);
+      border: 1px solid $black;
+      padding: 10px;
+      margin-top: -7px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      text-align: left;
+      min-height: 400px;
+      width: $siteContentWidth - 2;
+      z-index: 0;
+      @include border-radius-bottom(15px);
+      
+      .content-wrapper {
+        background-color: #f2f2f2;
+        background-color: rgba(242, 242, 242, 1);
+        border: 1px solid $black;
+        clear: both;
+        min-height: 400px;
+        overflow: auto;
+        padding-bottom: 10px;
+        @include border-radius-bottom(5px);
+        $shadow: #292929 0px 1px 5px inset;
+        @include box-shadow($shadow);
+        
+        .channel-wrapper {
+          background-color: #f8f8f8;
+          background-color: rgba(248, 248, 248, 1);
+          border: 1px solid #bbb;
+          float: left;
+          margin-left: $sizeLarge;
+          margin-bottom: $sizeLarge;
+          min-height: 250px;
+          padding: $sizeMedium;
+          width: 250px;
+          @include border-radius(5px);
+        }
+      }
+    }
+    .lower-wrapper.no-header {
+      margin-top: -20px;
+    }
+  }
+  .lower-container {
+    height: 40px;
+    margin: 0px auto 0px;
+    width: 815px;
+  }
+}
+
+// Fluid layouts (left aligned, with sidebar, min- & max-width content)
+.container-fluid {
+  position: relative;
+  min-width: 940px;
+  padding-left: 20px;
+  padding-right: 20px;
+  @include clearfix();
+  > .sidebar {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 220px;
+  }
+  // TODO in v2: rename this and .popover .content to be more specific
+  > .content {
+    margin-left: 240px;
+  }
+}
+
+
+// BASE STYLES
+// -----------
+
+// Links
+a {
+  color: $linkColor;
+  text-decoration: none;
+  line-height: inherit;
+  font-weight: inherit;
+  &:hover {
+    color: $linkColorHover;
+    text-decoration: underline;
+  }
+}
+
+// Quick floats
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.clear {
+  clear: both;
+}
+
+// Toggling content
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+
+
+// GRID SYSTEM
+// -----------
+// To customize the grid system, bring up the variables.scss file and change the column count, size, and gutter there
+
+.row {
+  @include clearfix();
+  margin-left: $sizeLarge;
+  margin-right: $sizeLarge;
+}
+
+// Find all .span# classes within .row and give them the necessary properties for grid columns (supported by all browsers back to IE7)
+// Credit to @dhg for the idea
+.row > [class*="span"] {
+  @include gridColumn();
+}
+
+// Default columns
+.span1     { @include columns(1); }
+.span2     { @include columns(2); }
+.span3     { @include columns(3); }
+.span4     { @include columns(4); }
+.span5     { @include columns(5); }
+.span6     { @include columns(6); }
+.span7     { @include columns(7); }
+.span8     { @include columns(8); }
+.span9     { @include columns(9); }
+.span10    { @include columns(10); }
+.span11    { @include columns(11); }
+.span12    { @include columns(12); }
+.span13    { @include columns(13); }
+.span14    { @include columns(14); }
+.span15    { @include columns(15); }
+.span16    { @include columns(16); }
+
+// For option 24-column grid
+.span17    { @include columns(17); }
+.span18    { @include columns(18); }
+.span19    { @include columns(19); }
+.span20    { @include columns(20); }
+.span21    { @include columns(21); }
+.span22    { @include columns(22); }
+.span23    { @include columns(23); }
+.span24    { @include columns(24); }
+
+// Offset column options
+.row {
+  > .offset1   { @include offset(1); }
+  > .offset2   { @include offset(2); }
+  > .offset3   { @include offset(3); }
+  > .offset4   { @include offset(4); }
+  > .offset5   { @include offset(5); }
+  > .offset6   { @include offset(6); }
+  > .offset7   { @include offset(7); }
+  > .offset8   { @include offset(8); }
+  > .offset9   { @include offset(9); }
+  > .offset10  { @include offset(10); }
+  > .offset11  { @include offset(11); }
+  > .offset12  { @include offset(12); }
+}
+// Unique column sizes for 16-column grid
+.span-one-third     { width: 300px; }
+.span-two-thirds    { width: 620px; }
+.offset-one-third   { margin-left: 340px; }
+.offset-two-thirds  { margin-left: 660px; }

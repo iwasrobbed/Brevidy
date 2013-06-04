@@ -1,0 +1,65 @@
+- # Initialize a constant telling the My Stuff header what page it's on
+- @profile_page = true 
+- # Initialize the categories
+- @categories = { :website => { :name => "Website", :maxlength => "250" },
+  :bio => { :name => "About yourself in 140 characters or less", :maxlength => "140" },
+  :interests => { :name => "Interests", :maxlength => "1000" },
+  :favorite_music => { :name => "Favorite Music", :maxlength => "1000" },
+  :favorite_movies => { :name => "Favorite Movies", :maxlength => "1000" },
+  :favorite_books => { :name => "Favorite Books", :maxlength => "1000" },
+  :favorite_foods => { :name => "Favorite Foods", :maxlength => "1000" },
+  :favorite_people => { :name => "Favorite People", :maxlength => "1000" },
+  :things_i_could_live_without => { :name => "Things I don't like", :maxlength => "1000" },
+  :one_thing_i_would_change_in_the_world => { :name => "One thing I would change in the world", :maxlength => "1000" },
+  :quotes_to_live_by => { :name => "Quotes to live by", :maxlength => "3000" } }
+  
+- content_for :profile_edit_buttons do
+  - unless current_user.blank?
+    - if current_user?(@user)
+      .profile-buttons.pull-right
+        = image_tag("ajax.gif", :class=>"ajax-animation", :size => "16x16")
+        %a#edit-profile.small.btn{:href => "#"} 
+          = image_tag("edit_icon.png", :size => "11x11")
+          Edit Profile
+        = link_to("Save Profile", user_update_about_path(@user, @profile), :id => "save-profile", :class => "small primary btn")
+        %a#cancel-profile.small.btn{:href => "#"} Cancel
+  
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'shared/content_titles'
+    
+    .profile-content
+      - @categories.each_with_index do |value, index|
+        %h3{:class => "#{value[0]}"}
+          #{value[1][:name]}
+          
+          -if index == 0
+            = content_for(:profile_edit_buttons)
+          
+        %div{:class => "#{value[0]}"}
+          - category ||= @user.profile.attributes["#{value[0]}"]
+          - if category.blank?
+            %p None
+          - else
+            = simple_format(auto_link(h(category), :html => { :target => "_blank" }), {}, :sanitize => false)
+        
+        - # Hide an editing textarea if the user can edit the about page
+        - unless current_user.blank?
+          - if current_user?(@user)
+            %textarea{:maxlength => "#{value[1][:maxlength]}", :placeholder => "", :class => "#{value[0]}"}
+              - if category.blank?
+                None
+              - else
+                - # use the preserve filter to preserve whitespace and newlines of original text
+                :preserve
+                  #{category}

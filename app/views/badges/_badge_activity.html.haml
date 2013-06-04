@@ -1,0 +1,7 @@
+- icon ||= Icon.find(badge_activity.badge_type)
+%li
+  %i{:class => "#{icon.css_class}_Large"}
+  %span
+    was given by
+    = link_to("#{badge_activity.from.name}", user_path(badge_activity.from))  
+    #{time_ago_in_words(badge_activity.created_at)} ago

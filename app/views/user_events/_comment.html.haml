@@ -1,0 +1,9 @@
+= render :partial => 'user_events/video_link.html', :locals => { :video => video }
+
+- # Show how long ago it occured
+%span.gray
+  #{time_ago_in_words(object.created_at)} ago
+  
+%p.comment
+  - # Sanitizes the comment output and auto-generates links
+  #{auto_link(h(object.content), :html => { :target => "_blank" })}

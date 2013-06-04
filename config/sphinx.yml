@@ -1,0 +1,4 @@
+staging:
+  version: 1.10-beta
+production:
+  version: 1.10-beta

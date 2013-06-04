@@ -1,0 +1,22 @@
+- @page_has_infinite_scrolling = true
+:javascript  
+  // Wait until all other JS in the page has loaded to run this
+  $(window).load(function(){
+  
+    // Hides pagination controls
+    $('.pagination').hide();
+    
+    // Adds infinite scrolling to a page based on 'item_selector' that gets passed in
+    $('.content-wrapper').infinitescroll({
+      appendCallback: false, // tells the script not to scrape the HTML using the .load() method
+      dataType: 'html', // sets the data response type
+      navSelector  : ".pagination", // selector for the paged navigation (it will be hidden)
+      nextSelector : ".pagination a.next_page", // selector for the NEXT link (to page 2)
+      itemSelector : "#{item_selector}", // selector for all items you'll retrieve
+      loading: {
+        msgText: "LOADING MORE...",
+        img: "#{image_path('ajax.gif')}"
+      }
+    });
+    
+  });

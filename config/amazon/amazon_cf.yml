@@ -1,0 +1,8 @@
+test:
+    cf_base_url: https://yourserver.cloudfront.net
+development:
+    cf_base_url: https://yourserver.cloudfront.net
+staging:
+    cf_base_url: https://yourserver.cloudfront.net
+production:
+    cf_base_url: https://yourserver.cloudfront.net

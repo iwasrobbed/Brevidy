@@ -1,0 +1,10 @@
+.top-banner
+  - if @user.banner_image_id == 0
+    - # The user has uploaded a banner or they are using the default
+    = image_tag("#{ @user.banner_image.blank? ? @user.get_banner_image_url(nil) : @user.banner_image_url(:resized) }", :alt => "", :size => "850x315")
+  - else
+    - # The user has chosen a banner from the gallery
+    = image_tag("#{@user.get_banner_image_url(@user.banner_image_id)}", :alt => "", :size => "850x315")
+  
+  - if current_user?(@user)
+    = link_to("Change Banner Image", user_edit_banner_path(current_user), :class => "small primary btn")

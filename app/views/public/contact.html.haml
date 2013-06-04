@@ -1,0 +1,42 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+
+  - # Main (White) Content Wrapper
+  .content-wrapper.standard-padding
+
+    = cache("contact_page") do
+      %ul.unstyled.mtl
+        %li
+          %h4 For all contact requests, please allow up to 24 hours for a reply.
+        
+      %ul.unstyled
+        %li
+          %h4 Do you need help?
+        %li
+          Please visit our #{link_to("community page", "http://getsatisfaction.com/brevidy", :target => "_blank")} 
+          for help topics.  If you need additional help, e-mail us at 
+          #{mail_to("support@brevidy.com", nil, {:encode => "hex"} )}
+  
+      %ul.unstyled
+        %li
+          %h4 Are you interested in investing in us?
+        %li 
+          We are open to discussions with professional investors.  If you are interested, please send us a message at 
+          #{mail_to("investors@brevidy.com", nil, {:encode => "hex"} )} for more info.
+
+      %ul.unstyled
+        %li
+          %h4 Are you writing a story about us?
+        %li
+          For all media inquiries, please send us a message at 
+          #{mail_to("media@brevidy.com", nil, {:encode => "hex"} )}.
+      
+      %ul.unstyled
+        %li
+          %h4 Are you interested in advertising with us?
+        %li
+          Please send an e-mail to #{mail_to("advertising@brevidy.com", nil, {:encode => "hex"} )}
+
+
+
+

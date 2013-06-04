@@ -1,0 +1,94 @@
+- # For the "content_for" blocks, you must key off the channel ID
+- # otherwise it will keep appending data to a regular symbol like :channel_view
+- # so by the time you get to the 2nd or 3rd channel, you will have 2 or 3 sets
+- # of channel data attached to the "content_for" store
+
+- channel_owner = get_object_owner(channel)
+
+- content_for "channel_view_#{channel.id}" do
+  - if controller.controller_name == 'subscriptions' && controller.action_name == 'subscriptions'
+    .subscriptions-view
+      = link_to(user_path(channel_owner)) do
+        = image_tag("#{channel_owner.image.blank? ? 'default_user_35px.jpg' : channel_owner.image_url(:small_profile) }", 
+          :alt => "#{channel_owner.name}",
+          :size => "35x35")
+      
+      .meta-area
+        %h5
+          = link_to(user_channel_path(channel_owner, channel), :class => "lighten-to-blue") do
+            #{channel.title}
+        %p
+          = link_to(user_path(channel_owner), :class => "lighten-to-blue") do
+            by #{channel_owner.name}
+    
+  - else
+    %h5
+      - if channel.featured?
+        = image_tag("featured_star.png", :alt => "Featured Channel", :size => "16x16")
+      - elsif channel.private?
+        = image_tag("private_small.png", :alt => "Private Channel", :size => "16x16")
+      - else
+        = image_tag("public.png", :alt => "Public Channel", :size => "16x16")
+    
+      = link_to(user_channel_path(channel_owner, channel), :class => "lighten-to-blue") do
+        #{channel.title}
+  
+  - # Thumbnail view
+  = link_to(user_channel_path(channel_owner, channel), :class => "channel-thumbnail-area") do
+    .thumbnails
+      - most_recent_videos = channel.videos_for_preview
+      - most_recent_videos.each do |v|
+        .thumb-view
+          = image_tag(v.get_thumbnail_url(v.selected_thumbnail), :alt => v.title, :size => "190x102")
+      
+- content_for "private_channel_message_#{channel.id}" do
+  - if controller.controller_name == 'subscriptions' && controller.action_name == 'subscriptions'
+    .subscriptions-view
+      = link_to(user_path(channel_owner)) do
+        = image_tag("#{channel_owner.image.blank? ? 'default_user_35px.jpg' : channel_owner.image_url(:small_profile) }", 
+          :alt => "#{channel_owner.name}",
+          :size => "35x35")
+    
+      .meta-area
+        %h5
+          #{channel.title}
+        %p
+          = link_to(user_path(channel_owner), :class => "lighten-to-blue") do
+            by #{channel_owner.name}
+  - else        
+    %h5
+      = image_tag("private_small.png", :alt => "Private Channel", :size => "16x16")
+      #{channel.title}
+  
+  = render :partial => "channels/private_area_message"
+
+.channel-wrapper{"data-channel-id" => channel.id}
+  - # Channel Content Area  
+  - if current_user_owns?(channel)
+    = content_for "channel_view_#{channel.id}"
+  - elsif channel.private?
+    - if current_user.blank?
+      = content_for "private_channel_message_#{channel.id}"
+    - else
+      - if current_user.is_subscribed_to?(channel)
+        = content_for "channel_view_#{channel.id}"
+      - else
+        = content_for "private_channel_message_#{channel.id}"
+  - else
+    = content_for "channel_view_#{channel.id}"
+
+  
+  .button-area
+    - if current_user_owns?(channel)
+      = link_to("Manage Channel", edit_user_channel_path(channel_owner, channel), :class => "btn xlarge")
+    - else
+      - if current_user.blank?
+        = link_to("Login to Subscribe", root_path, :class => "btn xlarge")
+      - else
+        - if current_user.is_subscribed_to?(channel)
+          = render :partial => "channels/button_unsubscribe", :locals => { :user => channel_owner, :channel => channel, :button_size => 'xlarge' }
+        - else
+          - if channel.private?
+            = render :partial => "channels/button_subscribe", :locals => { :user => channel_owner, :channel => channel, :is_private => true, :button_size => 'xlarge' }
+          - else
+            = render :partial => "channels/button_subscribe", :locals => { :user => channel_owner, :channel => channel, :is_private => false, :button_size => 'xlarge' }

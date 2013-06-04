@@ -1,0 +1,16 @@
+%li.zebra-striped
+  = link_to(user_path(user), :class => "user-image") do
+    = image_tag("#{user.image.blank? ? 'default_user_50px.jpg' : user.image_url(:medium_profile) }", 
+      :alt => "#{user.name}",
+      :size => "50x50")
+  
+  .user-meta
+    %h5
+      = link_to(user.name, user_path(user))
+    %span #{pluralize(user.videos_count, 'Video')} · #{pluralize(user.badges_count, 'Badge')} · #{pluralize(user.subscribers_count, 'Subscriber')}
+    - unless user.bio.blank?
+      %p
+        %i 
+          = auto_link(h(user.bio), :html => { :target => "_blank" })
+          
+  = link_to("View Channels", user_channels_path(user), :class => "small btn")

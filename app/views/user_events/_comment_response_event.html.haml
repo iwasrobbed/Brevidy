@@ -1,0 +1,4 @@
+also commented on 
+- unless video.title.blank?
+  #{get_object_owner(video).name}'s video,
+= render :partial => 'user_events/comment.html', :locals => { :video => video, :object => object }

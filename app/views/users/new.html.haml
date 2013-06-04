@@ -1,0 +1,44 @@
+/ what is brevidy
+.pitch_container
+  .pitch.left
+    .pitch_img.left
+      = image_tag("fleeting_moments.png", :size => "175x88")
+    %ul.right.mts.mll
+      %li
+        %h1 Share the fleeting moments of your life on video
+      %li.mlm.mtm
+        %h2 
+          Upload videos from your computer or share them from YouTube or Vimeo!
+          .mtm
+            Make videos public for the world to see, or make them private to share only with your family and friends.
+            The choice is yours.
+  
+  .pitch.left.mtl
+    .pitch_img.left
+      = image_tag("connect_people.png", :size => "96x125", :class => "connect_people")
+    %ul.right.mll.connect_people
+      %li
+        %h1 Connect with people around you
+      %li.mlm.mtm
+        %h2 
+          Subscribe to channels that interest you! Give people badges to express exactly how you feel about their videos!
+          Share other people's videos that you find interesting!
+          
+  .pitch.left.mtl
+    .pitch_img.left
+      = image_tag("social_sharing.png", :size => "129x115", :class => "social_sharing")
+    %ul.right.mll.social_sharing
+      %li
+        %h1 Let others join in the fun
+      %li.mlm.mtm
+        %h2 
+          Easily share any video to your social networks! Send your family and friends a link so they can
+          watch your private videos without signing up!
+  
+  .signup.left
+    .social_buttons
+      = link_to(image_tag("social_signup_facebook.png", :size => "225x43", :class => "left"), "#{root_url}auth/facebook")
+      = link_to(image_tag("social_signup_twitter.png", :size => "225x43", :class => "right"), "#{root_url}auth/twitter")
+      
+  .old_fashioned.left.tcenter
+    = link_to("...or sign up the old fashioned way", signup_path)

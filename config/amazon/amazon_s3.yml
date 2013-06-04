@@ -1,0 +1,16 @@
+test:
+    bucket_name: brevidyassets
+    asset_host: brevidyassets.s3.amazonaws.com
+    base_url: https://brevidyassets.s3.amazonaws.com
+development:
+    bucket_name: brevidyassets
+    asset_host: brevidyassets.s3.amazonaws.com
+    base_url: https://brevidyassets.s3.amazonaws.com
+staging:
+    bucket_name: brevidyassets
+    asset_host: brevidyassets.s3.amazonaws.com
+    base_url: https://brevidyassets.s3.amazonaws.com
+production:
+    bucket_name: brevidyassets
+    asset_host: brevidyassets.s3.amazonaws.com
+    base_url: https://brevidyassets.s3.amazonaws.com

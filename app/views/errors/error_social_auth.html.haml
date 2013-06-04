@@ -1,0 +1,16 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+
+  - # Main (White) Content Wrapper
+  .content-wrapper.standard-padding
+    .info-message.mtl
+      %h3 Error communicating w/ Facebook or Twitter
+      
+      %p
+        We're sorry, but there was an issue communicating with either Facebook or Twitter.  Please try again in a few minutes!
+        %br
+        %br
+        = link_to "Go back", :back
+
+    .okayguy
+      = image_tag("okayguy.png", :alt => "Okay", :size => "256x275")

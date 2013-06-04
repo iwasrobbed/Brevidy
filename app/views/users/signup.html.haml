@@ -1,0 +1,53 @@
+.old_fashioned_signup_container
+
+  / flash notices
+  = compact_flash_messages
+  - unless flash.empty?
+    %h3{ :class => "mbm flash_#{@flash_key}" }
+      = @flash_msg
+  
+  .formErrorField.js-validate.mbm
+  - # validation error field placeholder
+  - # do not remove
+
+  - if defined?(social_signup)
+    - # these instance vars get passed into the form
+    - @user = user
+    - @provider = provider
+    - @uid = uid
+    - @oauth_token = oauth_token
+    - @oauth_token_secret = oauth_token_secret
+    - @social_signup = social_signup
+
+    %h2.tcenter
+      Hooray!!! You're almost done signing up! :)
+        
+    .old_fashioned_signup  
+      = render :partial => 'users/signup_form'
+      
+    %h4.light.mtl.ptm.borderTopDotted
+      Note: If you already have a Brevidy account, login using your e-mail / password and you can connect your Facebook or Twitter
+      account within your Account settings.  This will allow you to login with Facebook or Twitter on future visits. 
+  
+  - else
+    .social_signup_buttons.left
+      %h2.tcenter
+        Quick Sign up
+      
+      = link_to(image_tag("social_signup_facebook.png", :size => "225x43", :class => "left mtl"), "#{root_url}auth/facebook")
+      = link_to(image_tag("social_signup_twitter.png", :size => "225x43", :class => "left mtl"), "#{root_url}auth/twitter")
+
+    .old_fashioned_signup.right
+      %h2.tcenter
+        Sign up the old fashioned way
+    
+      = render :partial => 'users/signup_form'
+
+:javascript
+  // Description: Shows & hides AJAX loading GIF when necessary
+  $(document).bind('ajaxSend', function(e, request, options) {
+    $(".signup_ajax_animation").show();
+  });
+  $(document).bind('ajaxComplete', function(e, request, options) {
+    $(".signup_ajax_animation").hide();
+  });

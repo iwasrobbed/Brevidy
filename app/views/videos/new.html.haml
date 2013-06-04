@@ -1,0 +1,64 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+
+  - # Main (White) Content Wrapper
+  .content-wrapper
+  
+    .video-meta-area
+    
+      %h3.video-meta-title Upload a Video
+      
+      - if @error_creating_video_object 
+        .info-message
+          Video uploads are unavailable at this time;  please try again later.  We have been notified about this issue.
+      - else
+        = render :partial => 'videos/video_sidebar'
+      
+        .success-message.video-saved
+          %p
+            Video information saved.
+      
+        #progress-bar
+          .progress{:style => "width: 0%;"}
+            %span{:style => "display:none;"}
+              Uploading
+        
+        .uploader-area
+          :plain      
+            #{s3_swf_uploader('video')}
+          %a{:id => "select-video", :href => "#", :class => "medium primary btn"} Select Video
+      
+      
+        - # Meta data form
+        = form_tag(user_video_path(current_user, @video), :id => "new-video-form", :method => "PUT", :remote => true) do
+          
+          = render :partial => 'videos/video_form', :locals => {:uploading_a_video => true}
+      
+        :javascript
+          // Enable the save button upon a form change
+          $('#select-a-channel-via-upload').live('change', function() {
+            $('#new-video-form input[type=submit]').removeClass('disabled').addClass('primary').val('Save Video');
+          });
+          $('#video_title, #video_description, .tags textarea').keyup(function() {
+            $('#new-video-form input[type=submit]').removeClass('disabled').addClass('primary').val('Save Video');
+          });
+          $('.disabled.btn').live('click', function () {
+            return false;
+          });
+        
+          // Handle AJAX responses
+          $('#new-video-form').live('ajax:success', function(data, json, response) {
+            // Replace select field
+            $('.channel-select-elements').remove();
+            $('#new-video-form .channel').append(json.channel_select);
+          
+            // Disable save button until something is changed
+            $('#new-video-form input[type=submit]').removeClass('primary').addClass('disabled').val('Saved');
+            $('.social-options').remove();
+            $('.success-message.video-saved').fadeOut('fast', function() {
+              $(this).fadeIn('slow');
+            });
+          });
+          $('#new-video-form').live('ajax:error', function(data, xhr, response){
+            brevidy.handle_ajax_error("video", xhr);
+          });

@@ -1,0 +1,21 @@
+.featured-video-post{"data-video-id" => "#{featured_video.id}"}
+  .update-position-area
+    .move-to-top
+      = link_to(user_update_featured_videos_path(current_user, :video_id => featured_video.id), :class => "move-video-to-top", 
+                                                "data-video-id" => "#{featured_video.id}", :remote => true, :method => "PUT") do
+                                                
+        = image_tag("up_arrow.png", :size => "20x10", :alt => "Move to Top")
+        Move to Top
+
+  .thumbnail
+    = image_tag(featured_video.get_thumbnail_url(featured_video.selected_thumbnail), :alt => featured_video.title, :size => "190x102")
+    
+  .featured-video-meta-area
+    %h3 
+      = featured_video.title
+      
+    %span.label.important Featured
+
+    %span.gray
+      #{time_ago_in_words(featured_video.featured_at)} ago
+  

@@ -1,0 +1,19 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'shared/content_titles'
+  
+    = render @subscriptions
+    
+    = will_paginate @subscriptions
+    
+    = render :partial => "shared/infinite_scrolling", :locals => { :item_selector => ".channel-wrapper" }

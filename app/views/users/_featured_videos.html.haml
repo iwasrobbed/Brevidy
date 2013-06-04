@@ -1,0 +1,23 @@
+#featured-videos
+  .title
+    = image_tag("featured_star.png", :alt => "Featured", :size => "16x16")
+    %span 
+      - if @user.blank?
+        Featured Videos
+      - else
+        = link_to("Featured Videos", user_channel_path(@user, @user.featured_channel), :class => "white-to-blue")
+    - if current_user?(@user)
+      %span.edit-order><
+        = link_to(user_edit_featured_videos_path(@user)) do
+          = image_tag("edit_order.png", :alt => "Edit Order", :size => "13x13")
+          %span>< edit order
+    
+  .videos
+    - if @latest_featured_videos.empty?
+      %p
+        - if @user.blank?
+          There aren't any featured videos to show :(
+        - else
+          #{@user.name} does not have any featured videos to show :(
+    - else
+      = render :partial => 'shared/featured_video', :collection => @latest_featured_videos

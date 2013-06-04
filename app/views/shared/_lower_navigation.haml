@@ -1,0 +1,15 @@
+.footerWrapper
+  %p.dark.pull-right
+    = succeed " · " do
+      = link_to("FAQ", faq_path, :class => "inlinelink")
+    = succeed " · " do
+      = link_to("Blog", "http://blog.brevidy.com", :class => "inlinelink")
+    = succeed " · " do
+      = link_to("Status", "http://status.brevidy.com", :class => "inlinelink")
+    = succeed " · " do
+      = link_to("Contact", contact_path, :class => "inlinelink")
+    = succeed " · " do
+      = link_to("Terms", tos_path, :class => "inlinelink")
+    = succeed " · " do
+      = link_to("Privacy", privacy_path, :class => "inlinelink")
+    Brevidy LLC, © 2012

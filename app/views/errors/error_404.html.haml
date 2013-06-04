@@ -1,0 +1,16 @@
+- # Dark Content Wrapper
+.lower-wrapper.no-header
+
+  - # Main (White) Content Wrapper
+  .content-wrapper.standard-padding
+    .info-message.mtl
+      %h3 Error
+      
+      %p
+        We're sorry, but we were either unable to find that page or you do not have the proper permissions to view it.
+        %br
+        %br
+        = link_to "Go back", :back
+
+    .okayguy
+      = image_tag("okayguy.png", :alt => "Okay", :size => "256x275")

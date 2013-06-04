@@ -1,0 +1,7 @@
+%li{"data-badge-type" => icon.badge_type}
+  %i{:class => "#{icon.css_class + '_Large'} tooltip-with-icon", :title => "#{icon.name}"}
+  %span
+    - if count.to_i > 9999
+      9,999+
+    -else
+      = number_with_delimiter(count, :delimiter => ',')

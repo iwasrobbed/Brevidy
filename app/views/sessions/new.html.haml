@@ -1,0 +1,33 @@
+.landing_login
+  / flash notices
+  - [:notice, :error, :message].each do |key| 
+    - unless flash[key].blank? 
+      %h3.mbm{ :class => "flash flash_#{key}" }= flash[key]  
+
+  %h2 Login to Brevidy
+  
+  .login_options_container    
+    .social_login_buttons.left
+      = link_to(image_tag("social_login_facebook.png", :size => "225x43", :class => "left mtl"), "#{root_url}auth/facebook")
+      = link_to(image_tag("social_login_twitter.png", :size => "225x43", :class => "left mtl"), "#{root_url}auth/twitter")
+      
+    .old_fashioned_login.right
+      %form{:action => sessions_path, :method => "post", :id => "login_form"}
+        %input{:name => "#{request_forgery_protection_token}", :type => "hidden", :value => "#{form_authenticity_token}"}
+        .landing_login_form
+          %label.mas{:for => "email", :class => "login_label"} E-mail:
+          = text_field_tag :email, nil, :placeholder => "e-mail address", :class => "mls ras"
+          %label.mas{:for => "password", :class => "login_label"} Password:
+          = password_field_tag :password, nil, :placeholder => "password", :class => "mls ras"
+          .tcenter
+            %input.mls.mtm{:name => "remember", :type => "checkbox", :value => "permanent", :checked => "checked"}
+            %span.remember_me_label Keep me logged in
+            %input.ram.medium.silver.button{:type => "submit", :name => "submit", :value => "Login"}
+            = link_to :forgotten_password do
+              %h4.light Forget your password?
+  
+= render :partial => 'users/signup_box'
+
+%h4.light.mtl.ptm.borderTopDotted
+  Note: If you already have a Brevidy account, login using your e-mail / password and you can connect your Facebook or Twitter
+  account within your Account settings.  This will allow you to login with Facebook or Twitter on future visits. 

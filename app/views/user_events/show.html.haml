@@ -1,0 +1,38 @@
+- # User Banner Image
+= render 'users/top_banner'
+
+- # Middle User Info Section
+= render 'users/middle_user_banner'
+
+- # Dark Content Wrapper
+.lower-wrapper
+  = render 'users/featured_videos'
+  
+  - # Main (White) Content Wrapper
+  .content-wrapper
+    = render 'shared/content_titles'
+    
+    - if @user_events.empty?
+      .info-message.mhl
+        There is currently no activity to show you.
+        %br/
+        %br/
+        %strong
+          What kind of activity do we show here?
+        %ul
+          %li When someone new subscribes to one of your channels
+          %li When someone gives you a badge for one of your videos
+          %li When someone comments on one of your videos
+          %li When someone comments on a video that you have also commented on
+            
+    - else
+      %ul.latest-activity
+        
+        - @user_events.each do |user_event|
+          - # Render the content based on event type (badge, comment, etc)
+          = render_content_for_event(user_event)
+    
+      = will_paginate @user_events
+
+      = render :partial => "shared/infinite_scrolling", :locals => { :item_selector => ".zebra-striped" }
+  

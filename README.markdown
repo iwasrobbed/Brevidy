@@ -3,6 +3,12 @@ Brevidy was a video social network that I built with Ruby on Rails 3.0.7, HAML, 
 
 The idea of Brevidy was to create a place that people could upload their own videos or cross-post YouTube/Vimeo videos into public or private channels that other people could subscribe to.  When you subscribe to other people's channels, all videos from those channels show up in an infinitely-scrolling stream and you can easily re-share, comment, or badge a video.  It was a beautiful website, but video is a difficult and expensive medium so unfortunately it didn't work out.
 
+## Sites built off of Brevidy
+
+Have a site you wanna share that is built off of the Brevidy code?  Tweet me [https://twitter.com/iwasrobbed](https://twitter.com/iwasrobbed)
+
+* [Ohdin - Find the best UAV operators and latest aerial footage. Organized by the pilots, builders and the public.](http://ohdin.com/)
+
 ## Screenshots
 <a style="padding:10px" href="https://s3.amazonaws.com/screenshots.angel.co/bc/23502/3d328b5a642998059a701b946ef44be2-original.png"><img src="https://s3.amazonaws.com/screenshots.angel.co/bc/23502/3d328b5a642998059a701b946ef44be2-original.png" alt="Screenshot" style="width: 200px;"/></a>
 <a style="padding:10px" href="https://s3.amazonaws.com/screenshots.angel.co/bc/23502/3af5aef6c273ff705932aa1dbcbdefaa-original.png"><img src="https://s3.amazonaws.com/screenshots.angel.co/bc/23502/3af5aef6c273ff705932aa1dbcbdefaa-original.png" alt="Screenshot" style="width: 200px;"/></a>

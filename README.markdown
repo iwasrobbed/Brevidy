@@ -7,7 +7,6 @@ The idea of Brevidy was to create a place that people could upload their own vid
 
 Have a site you wanna share that is built off of the Brevidy code?  Tweet me [https://twitter.com/iwasrobbed](https://twitter.com/iwasrobbed)
 
-* [Ohdin - Find the best UAV operators and latest aerial footage. Organized by the pilots, builders and the public.](http://ohdin.com/)
 
 ## Screenshots
 <a style="padding:10px" href="https://s3.amazonaws.com/screenshots.angel.co/bc/23502/3d328b5a642998059a701b946ef44be2-original.png"><img src="https://s3.amazonaws.com/screenshots.angel.co/bc/23502/3d328b5a642998059a701b946ef44be2-original.png" alt="Screenshot" style="width: 200px;"/></a>

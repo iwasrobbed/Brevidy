@@ -1,6 +1,6 @@
 ## Brevidy 
 
-Support this project via Gratipay <img src="http://img.shields.io/gratipay/iwasrobbed.svg">
+Support this project via Gratipay <a href="https://gratipay.com/iwasrobbed/"><img src="http://img.shields.io/gratipay/iwasrobbed.svg"></a>
 
 Brevidy was a video social network that I built with Ruby on Rails 3.0.7, HAML, Bootstrap, and jQuery that was released into beta testing February 2012.  Brevidy closed down shortly after due to the high costs of server hosting in addition to all of the add-on services such as video transcoding, email, error exception handling, database storage, etc.  Unfortunately, it's very difficult to get investor interest without knowing a friend of a friend, so I wasn't able to afford the rising costs that accompanied the user growth.
 

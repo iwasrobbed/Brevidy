@@ -1,4 +1,7 @@
 ## Brevidy 
+
+Support this project via Gratipay <img src="http://img.shields.io/gratipay/iwasrobbed.svg">
+
 Brevidy was a video social network that I built with Ruby on Rails 3.0.7, HAML, Bootstrap, and jQuery that was released into beta testing February 2012.  Brevidy closed down shortly after due to the high costs of server hosting in addition to all of the add-on services such as video transcoding, email, error exception handling, database storage, etc.  Unfortunately, it's very difficult to get investor interest without knowing a friend of a friend, so I wasn't able to afford the rising costs that accompanied the user growth.
 
 The idea of Brevidy was to create a place that people could upload their own videos or cross-post YouTube/Vimeo videos into public or private channels that other people could subscribe to.  When you subscribe to other people's channels, all videos from those channels show up in an infinitely-scrolling stream and you can easily re-share, comment, or badge a video.  It was a beautiful website, but video is a difficult and expensive medium so unfortunately it didn't work out.

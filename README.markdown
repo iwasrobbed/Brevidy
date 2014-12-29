@@ -42,7 +42,7 @@ Brevidy uses the following 3rd party services:
 
 ## Getting Started Locally
 
-  1. [Download and unzip these files](http://brevidyassets.s3.amazonaws.com/Bucket_Setup.zip) into the root directory of your Amazon S3 bucket (you'll need to modify the `crossdomain.xml` and `clientaccesspolicy.xml` files before uploading videos will work)
+  1. [Download and unzip these files](https://s3.amazonaws.com/iwasrobbed/open+source/BrevidyBucketSetup.zip) into the root directory of your Amazon S3 bucket (you'll need to modify the `crossdomain.xml` and `clientaccesspolicy.xml` files before uploading videos will work)
   2. Clone this repository to a local directory on your computer
   3. Create a new ruby set using something like RVM and run `bundle install` in the local repo directory
   4. Run `rake db:reset` to reset and seed the database with default tables and some necessary data
